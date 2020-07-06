@@ -3,11 +3,10 @@ import {
   View,
   Text,
   ScrollView,
-  TextInput,
-  TouchableWithoutFeedback,
   Image
 } from 'react-native';
 import styles from './styles';
+import Header from '../Header/Header';
 
 
 const Card = ({image}) => (
@@ -19,33 +18,25 @@ const Card = ({image}) => (
   </View>
 )
 
-const Home = () =>{
+const onSearch = (blue) =>{
+  console.log('ok');
+  console.log(blue);
+}
+
+const Home = ({navigation}) =>{
+
+  
   return (
     <>
+    <Header 
+    onSearch={onSearch}
+    placeholder="Buscar comercio"
+    showSearch={true}
+    textHeader="Resultados"
+    navigation={navigation}
+    back={false}
+    />
     <ScrollView>
-      {/* HEADER */}
-    <View style={styles.header}>
-      <View style={styles.leftContainer}>
-      <TouchableWithoutFeedback>
-          <Image style={styles.backIcon} source={require('../../assets/images/Asset10.png')} />
-        </TouchableWithoutFeedback>
-      </View>
-      <View style={styles.containerInput}>
-        <View style={styles.containerSearch}>
-          <TextInput onSubmitEditing={()=>console.log('submit')} placeholder="Buscar comercio" style={styles.inputSearch}/>
-          <TouchableWithoutFeedback
-            onPress={()=> console.log('press')}
-          >
-            <Image style={styles.searchIcon} source={require('../../assets/images/search.png')}/>
-          </TouchableWithoutFeedback>
-        </View>
-      </View>
-      <View style={styles.rightContainer}>
-        <TouchableWithoutFeedback>
-          <Image style={styles.menuIcon} source={require('../../assets/images/Asset8.png')} />
-        </TouchableWithoutFeedback>
-      </View>
-    </View>
     {/* TOP BAR  */}
     <View style={styles.topBar}>
       <Text>Domicilio: <Text style={{fontWeight:'bold'}}>San Jeronimo 3167. Santa Fe</Text></Text>
@@ -55,6 +46,37 @@ const Home = () =>{
       <Card image={require('../../assets/images/chair2.png')}/>
       <Card image={require('../../assets/images/chair3.png')}/>
       <Card image={require('../../assets/images/chair4.png')}/>
+      <Card image={require('../../assets/images/chair5.png')}/>
+      <Card image={require('../../assets/images/chair6.png')}/>
+      <Card image={require('../../assets/images/chair.png')}/>
+      <Card image={require('../../assets/images/chair2.png')}/>
+      <Card image={require('../../assets/images/chair.png')}/>
+      <Card image={require('../../assets/images/chair2.png')}/>
+      <Card image={require('../../assets/images/chair3.png')}/>
+      <Card image={require('../../assets/images/chair4.png')}/>
+      <Card image={require('../../assets/images/chair5.png')}/>
+      <Card image={require('../../assets/images/chair2.png')}/>
+      <Card image={require('../../assets/images/chair3.png')}/>
+      <Card image={require('../../assets/images/chair4.png')}/>
+      <Card image={require('../../assets/images/chair5.png')}/>
+      <Card image={require('../../assets/images/chair6.png')}/>
+      <Card image={require('../../assets/images/chair.png')}/>
+      <Card image={require('../../assets/images/chair.png')}/>
+      <Card image={require('../../assets/images/chair.png')}/>
+      <Card image={require('../../assets/images/chair2.png')}/>
+      <Card image={require('../../assets/images/chair3.png')}/>
+      <Card image={require('../../assets/images/chair4.png')}/>
+      <Card image={require('../../assets/images/chair5.png')}/>
+      <Card image={require('../../assets/images/chair6.png')}/>
+      <Card image={require('../../assets/images/chair.png')}/>
+      <Card image={require('../../assets/images/chair2.png')}/>
+      <Card image={require('../../assets/images/chair2.png')}/>
+      <Card image={require('../../assets/images/chair3.png')}/>
+      <Card image={require('../../assets/images/chair4.png')}/>
+      <Card image={require('../../assets/images/chair5.png')}/>
+      <Card image={require('../../assets/images/chair6.png')}/>
+      <Card image={require('../../assets/images/chair.png')}/>
+      <Card image={require('../../assets/images/chair2.png')}/>
       <Card image={require('../../assets/images/chair5.png')}/>
       <Card image={require('../../assets/images/chair6.png')}/>
       <Card image={require('../../assets/images/chair.png')}/>

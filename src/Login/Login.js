@@ -12,7 +12,6 @@ import styles from './styles';
 const Login = () =>{
   return (
     <>
-    <StatusBar hidden={true}/>
       <View style={styles.column}>
         <View style={styles.containerLogo}>
           <Image style={styles.logo} source={require('../../assets/images/logo.png')} />

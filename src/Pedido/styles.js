@@ -1,0 +1,96 @@
+import {StyleSheet} from 'react-native';
+
+const styles = StyleSheet.create({
+  topBar:{
+    padding:10,
+  },
+  switchRow:{
+    marginTop:10,
+    marginBottom:10,
+    flexDirection:'row'
+  },
+  switchContainer:{
+    flex:2,
+    flexDirection:'row',
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  containerCards:{
+    borderColor:'gray',
+    borderWidth:1,
+    borderRadius:20,
+    marginLeft:15,
+    marginRight:15,
+    flex:0.45
+  },
+  switch:{
+    width:55,
+  },
+  textSwitchContainer:{
+    flex:0.5,
+    justifyContent:"center"
+  },
+  aclaracionInput:{
+    marginTop:15,
+    paddingLeft:10,
+    borderColor:'gray',
+    borderWidth:1,
+    borderRadius:20,
+  },
+  cardContainer:{
+    flexDirection:'row',
+    flex:1,
+    padding:8,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  imageContainer:{
+    flex:1,
+    zIndex:1,
+    height:80,
+    backgroundColor:'#438a5e',
+    borderRadius:20,
+    alignItems:'center',
+    justifyContent:'center',
+    elevation: 3,
+  },
+  cardImage:{
+    resizeMode:'contain',
+    height:75,
+    width:80,
+  },
+  textContainer:{
+    flex:3.5,
+    flexDirection:'row',
+    backgroundColor:'#f5f5f5',
+    height:60,
+    marginLeft:-5,
+    borderTopEndRadius:3,
+    borderBottomEndRadius:3,
+    elevation: 3,
+  },
+  quantityRow:{
+    flex:1.5,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  textRow:{
+    flex:7,
+    paddingLeft:10,
+    justifyContent:"center"
+  },
+  itemRow:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:"center",
+  },
+  textDark:{
+    color:'#363636',
+  },
+  footerContainer:{
+    height:25,
+    backgroundColor:'#f0a500'
+  },
+});
+
+export default styles;
