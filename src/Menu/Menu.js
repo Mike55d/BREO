@@ -7,6 +7,11 @@ import {
 } from 'react-native';
 
 import styles from './styles';
+import {connect} from 'react-redux';
+import * as GoogleSignIn from 'expo-google-sign-in';
+import {logout} from '../actions/auth';
+import {setAddress} from '../actions/direccion';
+
 
 const Item = ({text , nagivation , screen}) => {
   return(
@@ -20,7 +25,13 @@ const Item = ({text , nagivation , screen}) => {
 }
 
 
-const Menu = (props) => {
+const Menu = ({navigation, dispatch}) => {
+
+  const Logout = async ()=>{
+    await GoogleSignIn.signOutAsync();
+    dispatch(setAddress(null));
+    dispatch(logout());
+  }
   return (
     <>
     <StatusBar hidden={true}/>
@@ -33,28 +44,29 @@ const Menu = (props) => {
           <Item
             screen='Home'
             text="Inicio"
-            nagivation={props.navigation}
+            nagivation={navigation}
           />
           <Item
             screen='MiDireccion'
             text="Mi direccion actual"
-            nagivation={props.navigation}
+            nagivation={navigation}
           />
           <Item
             screen='Home'
             text="Contactanos"
-            nagivation={props.navigation}
+            nagivation={navigation}
           />
           <Item
             screen='Home'
             text="Terminos y condiciones"
-            nagivation={props.navigation}
+            nagivation={navigation}
           />
-          <Item
-            screen='Home'
-            text="Cerrar sesion"
-            nagivation={props.navigation}
-          />
+          <TouchableWithoutFeedback 
+            onPress={() => Logout()}>
+              <View style={styles.itemContainer}>
+                <Text style={styles.textItem}>Logout</Text>
+              </View>
+            </TouchableWithoutFeedback>
         </View>
         <View style={styles.footer}>
         </View>
@@ -63,4 +75,4 @@ const Menu = (props) => {
   )
 }
 
-export default Menu;
+export default connect()(Menu);

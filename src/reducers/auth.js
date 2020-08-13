@@ -1,17 +1,17 @@
-const auth = (state = {user:null} , action ) => {
+const auth = (state = null , action ) => {
   switch (action.type) {
     case 'LOGIN_SUCCESS':
-      return {
-        user: action.payload,
-        token: '1263hdytsjakiqolwmen'
-      }
+      return action.payload
     case 'LOGIN_FAILURE':
-      return {
-        user: null,
-        error: action.payload
-      }
+      return null
     case 'LOGOUT':
-      return {user:null}
+      return null
+    case 'FAKE_AUTH':
+      return {
+        email:'mike.gonzalez55d@gmail.com',
+        firstName:'Heath',
+        lastName:'cliff'
+      }
     default:
       return state;
   }

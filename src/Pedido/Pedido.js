@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React ,{useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,15 +7,18 @@ import {
   TouchableWithoutFeedback,
   Image,
   Switch,
+  Linking,
 } from 'react-native';
 
 import Header from '../Header/Header';
 import styles from './styles';
 import { FontAwesome5 } from '@expo/vector-icons';
+import {routeImages} from '../actions/routePanel';
+import {connect} from 'react-redux';
 
-const Recibir = () =>{
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+const Recibir = ({toggleRecibir , isEnabled}) =>{
+  // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <View style={styles.switchRow}>
     <View style={styles.textSwitchContainer}>
@@ -26,7 +29,7 @@ const Recibir = () =>{
       <Switch
       trackColor={{ false: "#767577", true: "#81b0ff" }}
       thumbColor={isEnabled ? "#f0a500" : "#f4f3f4"}
-      onValueChange={toggleSwitch}
+      onValueChange={()=>toggleRecibir()}
       value={isEnabled}
       style={styles.switch}
       />
@@ -36,9 +39,7 @@ const Recibir = () =>{
   )
 }
 
-const Pago = () =>{
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+const Pago = ({togglePago , isEnabled}) =>{
   return (
     <View style={styles.switchRow}>
     <View style={styles.textSwitchContainer}>
@@ -49,7 +50,7 @@ const Pago = () =>{
       <Switch
       trackColor={{ false: "#767577", true: "#81b0ff" }}
       thumbColor={isEnabled ? "#f0a500" : "#f4f3f4"}
-      onValueChange={toggleSwitch}
+      onValueChange={()=>togglePago()}
       value={isEnabled}
       style={styles.switch}
       />
@@ -59,22 +60,22 @@ const Pago = () =>{
   )
 }
 
-const Card = () => {
+const Card = ({item}) => {
   return (
     <View style={styles.cardContainer}>
     <View style={styles.imageContainer}>
       <Image
         style={styles.cardImage}
-        source={require('../../assets/images/logo.png')}
+        source={{uri:routeImages+item.producto.imagen}}
       />
     </View>
     <View style={styles.textContainer}>
       <View style={styles.textRow}>
-        <Text style={[styles.nombreComercio,styles.textDark]}>Vino Blanco Sinergia</Text>
+        <Text style={[styles.nombreComercio,styles.textDark]}>{item.producto.nombre}</Text>
       </View>
       <View style={styles.quantityRow}>
-        <Text style={[{fontSize:12},styles.textDark]}>(x1)</Text>
-        <Text style={[{fontSize:12},styles.textDark]}>$1234</Text>
+        <Text style={[{fontSize:12},styles.textDark]}>(x{item.cantidad})</Text>
+        <Text style={[{fontSize:12},styles.textDark]}>${item.producto.precio}</Text>
       </View>
       <View style={styles.iconsRow}>
 
@@ -84,7 +85,35 @@ const Card = () => {
   )
 }
 
-const Pedido = ({navigation}) => {
+const Pedido = ({navigation , route , user}) => {
+  const pedido = route.params.pedido;
+  const subtotoal = route.params.subtotal;
+  const comercio = route.params.comercio;
+  const [aclaraciones,setAclaraciones] = useState(null);
+  const [recibir, setRecibir] = useState(false);
+  const [pago, setPago] = useState(false);
+
+  const togglePago = () =>{
+    setPago(!pago);
+  }
+
+  const toggleRecibir = () =>{
+    setRecibir(!recibir);
+  }
+
+  const sendWhatsApp = () =>{
+    let text = `Hola soy ${user.firstName} ${user.lastName} y este es mi pedido a través de la app BREO \n`;
+    pedido.forEach(item =>{
+      text+=`${item.producto.nombre} (x${item.cantidad}) \n`;
+    });
+    text+=`Aclaraciones: ${aclaraciones}\n`;
+    text+=`Mi dirección es: [URL de la ubicación Google Maps]\n`;
+    text+=`Voy a solicitar el producto o servicio: ${recibir ? 'En el local':'A domicilio'} \n`;
+    text+=`El pago será con: ${pago ? 'Tarjeta' : 'Efectivo' } \n`;
+    text+=`Total: $${subtotoal}\n`;
+    text+=`Muchas gracias!`;
+    Linking.openURL(`whatsapp://send?text=${text}&phone=${comercio.whatsApp}`)
+  }
 
   return (
     <>
@@ -92,37 +121,38 @@ const Pedido = ({navigation}) => {
         textHeader="Resumen del pedido"
         showSearch={false}
         navigation={navigation}
-        back={true}
+        back="Comercio"
       />
       <View style={{ flex: 1 }}>
         {/* TOP BAR  */}
-        <View style={[styles.topBar, { flex: 0.25 }]}>
+        <View style={[styles.topBar, { flex: 1.5 }]}>
           <Text>Domicilio: <Text style={{ fontWeight: 'bold' }}>San Jeronimo 3167. Santa Fe</Text></Text>
-          <Recibir />
-          <Pago />
+          <Recibir toggleRecibir={toggleRecibir} isEnabled={recibir}/>
+          <Pago togglePago={togglePago} isEnabled={pago}/>
           <TextInput
             placeholderTextColor="gray"
             placeholder="Queres dejar una aclaracion ?"
-            style={styles.aclaracionInput} />
+            style={styles.aclaracionInput}
+            value={aclaraciones}
+            onChangeText={(text)=> setAclaraciones(text)}
+            />
         </View>
         <View style={styles.containerCards}>
           <ScrollView>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {pedido ? (
+              pedido.map(item =>
+                <Card key={item.producto.id} item={item} />
+              )
+            ):(null)}
           </ScrollView>
         </View>
         <View style={{ alignItems: 'center', justifyContent: 'center', padding: 5 }}>
-          <Text>Subtotal: <Text style={{ fontWeight: "bold" }}>$5702</Text></Text>
+          <Text>Subtotal: <Text style={{ fontWeight: "bold" }}>${subtotoal}</Text></Text>
         </View>
-        <View style={{ flex: 0.3, alignItems: 'center', justifyContent: 'center' }}>
-          <TouchableWithoutFeedback onPress={() => console.log('pressed')}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableWithoutFeedback onPress={() => sendWhatsApp()}>
             <View style={{ backgroundColor: 'green', padding: 10, paddingTop: 2, borderRadius: 50 }}>
-              <FontAwesome5 name="whatsapp" size={60} color="white" />
+              <FontAwesome5 name="whatsapp" size={45} color="white" />
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -132,4 +162,8 @@ const Pedido = ({navigation}) => {
   )
 }
 
-export default Pedido;
+const mapStateToProps = (state) => ({
+  user:state.auth
+})
+
+export default connect(mapStateToProps)(Pedido);

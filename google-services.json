@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "360794855726",
+    "firebase_url": "https://breo-89db3.firebaseio.com",
+    "project_id": "breo-89db3",
+    "storage_bucket": "breo-89db3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360794855726:android:d7f3eedf8f6ba1be6c82bf",
+        "android_client_info": {
+          "package_name": "com.devTeamWeb.Breo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360794855726-ou71sfp51bt36erhf44c16okhf1vh1op.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devTeamWeb.Breo",
+            "certificate_hash": "f794cfba8b237d52676243ddc6a497136e30547a"
+          }
+        },
+        {
+          "client_id": "360794855726-pssi1dm6n67dpigch6gc3m242469e844.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWRc_DujehbazlWIwOAoMTxxKJAdO1La8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360794855726-pssi1dm6n67dpigch6gc3m242469e844.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

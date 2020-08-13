@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {
   View,
   Text,
@@ -10,58 +10,88 @@ import {
 
 import Header from '../Header/Header';
 import styles from './styles';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { Foundation } from '@expo/vector-icons'; 
-import { Feather } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import {connect} from 'react-redux';
+import {getComercios} from '../actions/comercios';
+import {routeImages} from '../actions/routePanel';
 
-
-const Card = () => {
+const Card = ({item , onPress}) => {
   return (
-    <View style={styles.cardContainer}>
-    <View style={styles.imageContainer}>
-      <Image
-        style={styles.cardImage}
-        source={require('../../assets/images/logo.png')}
-      />
-    </View>
-    <View style={styles.textContainer}>
-      <View style={styles.textRow}>
-        <Text style={styles.nombreComercio}>Nombre del comercio</Text>
+    <TouchableWithoutFeedback
+      onPress={() => onPress(item)}
+    >
+      <View style={styles.cardContainer}>
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.cardImage}
+          source={{uri:routeImages+item.imagen}}
+        />
       </View>
-      <View style={styles.iconsRow}>
-        <MaterialCommunityIcons name="truck" size={13} color="black" style={{opacity:0.8}} />
-        <Foundation name="credit-card" size={15} color="black" style={{opacity:0.8}} />
-        <Feather name="map-pin" size={12} color="black" style={{opacity:0.8}} />
+      <View style={styles.textContainer}>
+        <View style={styles.textRow}>
+          <Text style={styles.nombreComercio}>{item.nombre}</Text>
+        </View>
+        <View style={styles.iconsRow}>
+          <MaterialCommunityIcons name="truck" size={13} color="black" style={{opacity:0.8}} />
+          <Foundation name="credit-card" size={15} color="black" style={{opacity:0.8}} />
+          <Feather name="map-pin" size={12} color="black" style={{opacity:0.8}} />
+        </View>
       </View>
     </View>
-  </View>
+  </TouchableWithoutFeedback>
   )
 }
 
-const Comercios = ({navigation}) => {
+
+const Comercios = ({navigation , dispatch , route , comercios}) => {
+  const palabras = route.params.palabras;
+  const rubro = route.params.rubro;
+  
+  useEffect(()=> {
+    if(!comercios){
+      if(palabras){
+        dispatch(getComercios('palabras',palabras));
+      }else{
+        dispatch(getComercios('rubro',rubro));
+      }
+    }
+  },[comercios]);
+
+  useEffect(()=> {
+    console.log('change params')
+      if(palabras){
+        dispatch(getComercios('palabras',palabras));
+      }else{
+        dispatch(getComercios('rubro',rubro));
+      }
+  },[route.params.palabras,route.params.rubro]);
+
+
+  const onPressComercio = (item) =>{
+    navigation.navigate('Comercio',{comercio:item});
+  }
+
   return (
     <>
       <Header 
         showSearch={false}
         textHeader="Resultados"
         navigation={navigation}
-        back={true}
+        back="Home"
       />
       <ScrollView>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+        {comercios ? (
+          comercios.map(item =>
+              <Card onPress={onPressComercio} key={item.id} item={item}/>
+            )
+        ):(null)}
       </ScrollView>
     </>
   )
 }
-
-export default Comercios;
+const mapStateToProps = (state) =>({
+  comercios:state.comercios
+})
+export default connect(mapStateToProps)(Comercios);

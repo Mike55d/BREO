@@ -20,7 +20,9 @@ const Home = ({onSearch , placeholder , showSearch , textHeader, navigation , ba
       <View style={styles.header}>
         <View style={styles.leftContainer}>
           {back ? (
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate(back)}
+            >
             <Ionicons name="md-arrow-round-back" size={25} color="#111d5e" />
             </TouchableWithoutFeedback>
           ):(

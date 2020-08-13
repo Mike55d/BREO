@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,24 +7,47 @@ import {
 } from 'react-native';
 import styles from './styles';
 import Header from '../Header/Header';
+import Loader from '../Loader/Loader';
+import {connect} from 'react-redux';
+import {getRubros} from '../actions/rubros';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {routeImages} from '../actions/routePanel';
 
-
-const Card = ({image}) => (
+const Card = ({item , onPress}) => (
   <View style={styles.card}>
-    <View style={styles.containerImage}>
-      <Image style={styles.imageRubro} source={image} />
-    </View>
-    <Text style={styles.textRubro} >Nombre Rubro</Text>
+    <TouchableWithoutFeedback
+      key={item.id}
+      onPress={()=> onPress(item.id)}
+      style={{ width: '25%' }}
+    >
+      <View style={styles.containerImage}>
+        <Image style={styles.imageRubro} source={{ uri: routeImages + item.Imagen }} />
+      </View>
+      <Text numberOfLines={1} style={styles.textRubro} >{item.Nombre}</Text>
+    </TouchableWithoutFeedback>
   </View>
 )
 
-const onSearch = (blue) =>{
-  console.log('ok');
-  console.log(blue);
-}
 
-const Home = ({navigation}) =>{
 
+const Home = ({navigation,dispatch,rubros}) =>{
+
+  const onSearch = (palabras) =>{
+    navigation.navigate('Comercios',{palabras:palabras,rubro:null});
+  }
+
+  const onPress = (id) =>{
+    navigation.navigate('Comercios',{palabras:null,rubro:id});
+  }
+
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => (
+    layoutMeasurement.height + contentOffset.y >= contentSize.height -0.1
+  )
+  useEffect(()=>{
+    if(!rubros){
+      dispatch(getRubros());
+    }
+  },[rubros])
   
   return (
     <>
@@ -36,55 +59,32 @@ const Home = ({navigation}) =>{
     navigation={navigation}
     back={false}
     />
-    <ScrollView>
+    <Loader/>
+    <ScrollView
+      onScroll={({ nativeEvent }) => {
+        if (isCloseToBottom(nativeEvent)) {
+          console.log('bottom');
+        }
+      }}
+    >
     {/* TOP BAR  */}
     <View style={styles.topBar}>
       <Text>Domicilio: <Text style={{fontWeight:'bold'}}>San Jeronimo 3167. Santa Fe</Text></Text>
     </View>
     <View style={styles.listContent}>
-      <Card image={require('../../assets/images/chair.png')}/>
-      <Card image={require('../../assets/images/chair2.png')}/>
-      <Card image={require('../../assets/images/chair3.png')}/>
-      <Card image={require('../../assets/images/chair4.png')}/>
-      <Card image={require('../../assets/images/chair5.png')}/>
-      <Card image={require('../../assets/images/chair6.png')}/>
-      <Card image={require('../../assets/images/chair.png')}/>
-      <Card image={require('../../assets/images/chair2.png')}/>
-      <Card image={require('../../assets/images/chair.png')}/>
-      <Card image={require('../../assets/images/chair2.png')}/>
-      <Card image={require('../../assets/images/chair3.png')}/>
-      <Card image={require('../../assets/images/chair4.png')}/>
-      <Card image={require('../../assets/images/chair5.png')}/>
-      <Card image={require('../../assets/images/chair2.png')}/>
-      <Card image={require('../../assets/images/chair3.png')}/>
-      <Card image={require('../../assets/images/chair4.png')}/>
-      <Card image={require('../../assets/images/chair5.png')}/>
-      <Card image={require('../../assets/images/chair6.png')}/>
-      <Card image={require('../../assets/images/chair.png')}/>
-      <Card image={require('../../assets/images/chair.png')}/>
-      <Card image={require('../../assets/images/chair.png')}/>
-      <Card image={require('../../assets/images/chair2.png')}/>
-      <Card image={require('../../assets/images/chair3.png')}/>
-      <Card image={require('../../assets/images/chair4.png')}/>
-      <Card image={require('../../assets/images/chair5.png')}/>
-      <Card image={require('../../assets/images/chair6.png')}/>
-      <Card image={require('../../assets/images/chair.png')}/>
-      <Card image={require('../../assets/images/chair2.png')}/>
-      <Card image={require('../../assets/images/chair2.png')}/>
-      <Card image={require('../../assets/images/chair3.png')}/>
-      <Card image={require('../../assets/images/chair4.png')}/>
-      <Card image={require('../../assets/images/chair5.png')}/>
-      <Card image={require('../../assets/images/chair6.png')}/>
-      <Card image={require('../../assets/images/chair.png')}/>
-      <Card image={require('../../assets/images/chair2.png')}/>
-      <Card image={require('../../assets/images/chair5.png')}/>
-      <Card image={require('../../assets/images/chair6.png')}/>
-      <Card image={require('../../assets/images/chair.png')}/>
-      <Card image={require('../../assets/images/chair2.png')}/>
+      {rubros ? (
+        rubros.map(item =>
+          <Card key={item.id} item={item} onPress={onPress}/>
+        )
+      ):(null)}
     </View>
     </ScrollView>
     </>
   )
 }
 
-export default Home;
+const mapStateToProps = (state) =>({
+  rubros:state.rubros
+})
+
+export default connect(mapStateToProps)(Home);

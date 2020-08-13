@@ -19,8 +19,10 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   textIcon:{
+    width:250,
     fontSize:11,
     color:'white',
+    marginTop:1.5,
     marginLeft:5
   },
   cardContainer:{
