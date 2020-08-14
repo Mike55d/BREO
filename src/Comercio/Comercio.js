@@ -5,7 +5,8 @@ import {
   ScrollView,
   TextInput,
   TouchableWithoutFeedback,
-  Image
+  Image,
+  RefreshControl,
 } from 'react-native';
 
 import Header from '../Header/Header';
@@ -91,7 +92,7 @@ const Card = ({item , updatePedido}) => {
   )
 }
 
-const Comercio = ({navigation, dispatch , route , productos}) => {
+const Comercio = ({navigation, dispatch , route , productos , refresh}) => {
   const comercio = route.params.comercio;
   const [pedido,setPedido] = useState([]);
   const [subtotal,setSubtotal] = useState(0);
@@ -99,6 +100,10 @@ const Comercio = ({navigation, dispatch , route , productos}) => {
   const onSearch = (palabras) =>{
     dispatch(getProductos(comercio.id,palabras));
   }
+
+  const onRefresh = React.useCallback(() => {
+    dispatch(getProductos(comercio.id,null,true));
+  },[]);
 
   const updatePedido = (item,cantidad) =>{
     let pedidoA = pedido;
@@ -146,7 +151,12 @@ const Comercio = ({navigation, dispatch , route , productos}) => {
       back="Comercios"
     />
       <TopBar comercio={comercio}/>
-      <ScrollView contentContainerStyle={{paddingTop:10}}>
+      <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
+      }
+      contentContainerStyle={{paddingTop:10}}
+      >
         {productos ?(
           productos.map(item =>
             <Card key={item.id} item={item} updatePedido={updatePedido}/>
@@ -170,7 +180,8 @@ const Comercio = ({navigation, dispatch , route , productos}) => {
 }
 
 const mapStateToProps = (state) =>({
-  productos:state.productos
+  productos:state.productos,
+  refresh:state.refresh,
 })
 
 export default connect(mapStateToProps)(Comercio);

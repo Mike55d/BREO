@@ -5,6 +5,7 @@ import rubros from './rubros';
 import comercios from './comercios';
 import productos from './productos';
 import direccion from './direccion';
+import refresh from './refresh';
 
 export default combineReducers({
   auth,
@@ -12,5 +13,6 @@ export default combineReducers({
   rubros,
   comercios,
   productos,
-  direccion
+  direccion,
+  refresh,
 })

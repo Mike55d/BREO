@@ -1,23 +1,26 @@
 import Axios from 'axios';
 import {route} from './routePanel';
 import {loaderOn,loaderOff} from './loader';
+import {refreshOn,refreshOff} from './refresh';
 
 const setRubros = (payload) =>({
   type:'SET_RUBROS',
   payload:payload
 })
 
-export const getRubros = () =>(
+export const getRubros = (refresh= false) =>(
   (dispatch) =>{
-    dispatch(loaderOn());
+    const loadOn = refresh ? refreshOn : loaderOn;
+    const loadOff = refresh ? refreshOff : loaderOff;
+    dispatch(loadOn());
     Axios.get(route+'rubros/')
     .then(res =>{
-      dispatch(loaderOff());
+      dispatch(loadOff());
       dispatch(setRubros(res.data));
     })
     .catch(error =>{
       console.log('rubros',error);
-      dispatch(loaderOff());
+      dispatch(loadOff());
     })
   }
 );

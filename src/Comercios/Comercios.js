@@ -5,7 +5,8 @@ import {
   ScrollView,
   TextInput,
   TouchableWithoutFeedback,
-  Image
+  Image,
+  RefreshControl,
 } from 'react-native';
 
 import Header from '../Header/Header';
@@ -45,9 +46,13 @@ const Card = ({item , onPress}) => {
 }
 
 
-const Comercios = ({navigation , dispatch , route , comercios}) => {
+const Comercios = ({navigation , dispatch , route , comercios , refresh}) => {
   const palabras = route.params.palabras;
   const rubro = route.params.rubro;
+
+  const onRefresh = React.useCallback(() => {
+    dispatch(getComercios('rubro',rubro,true));
+  },[comercios]);
   
   useEffect(()=> {
     if(!comercios){
@@ -81,7 +86,11 @@ const Comercios = ({navigation , dispatch , route , comercios}) => {
         navigation={navigation}
         back="Home"
       />
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
+        }
+      >
         {comercios ? (
           comercios.map(item =>
               <Card onPress={onPressComercio} key={item.id} item={item}/>
@@ -92,6 +101,8 @@ const Comercios = ({navigation , dispatch , route , comercios}) => {
   )
 }
 const mapStateToProps = (state) =>({
-  comercios:state.comercios
+  comercios:state.comercios,
+  refresh:state.refresh,
+
 })
 export default connect(mapStateToProps)(Comercios);

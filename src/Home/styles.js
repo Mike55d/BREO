@@ -32,6 +32,16 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     borderRadius:12,
     elevation:10,
+  },
+  footer:{
+    height:65,
+    padding:25,
+    flexDirection:"row",
+    alignItems:'center'
+  },
+  textFooter:{
+    flex:1,
+    fontWeight:"bold",
   }
   
 });
