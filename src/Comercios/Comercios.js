@@ -3,7 +3,6 @@ import {
   View,
   Text,
   ScrollView,
-  TextInput,
   TouchableWithoutFeedback,
   Image,
   RefreshControl,
@@ -13,10 +12,10 @@ import Header from '../Header/Header';
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import {connect} from 'react-redux';
 import {getComercios} from '../actions/comercios';
 import {routeImages} from '../actions/routePanel';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const Card = ({item , onPress}) => {
   return (
@@ -34,11 +33,23 @@ const Card = ({item , onPress}) => {
         <View style={styles.textRow}>
           <Text style={styles.nombreComercio}>{item.nombre}</Text>
         </View>
-        <View style={styles.iconsRow}>
+        <View style={styles.containerIconText}>
+        <MaterialCommunityIcons name="truck" size={14} color="#ff5e00" />
+          <Text numberOfLines={1} style={styles.textIcon}>{item.horario}</Text>
+        </View>
+        <View style={styles.containerIconText}>
+        <Foundation name="credit-card" size={16} color="#ff5e00" />
+          <Text numberOfLines={1} style={styles.textIcon}>{item.pagoTarjeta}</Text>
+        </View>
+        <View style={styles.containerIconText}>
+          <FontAwesome5 name="store-alt" size={12} color="#ff5e00" />
+          <Text numberOfLines={1} style={styles.textIcon}>{item.dirLocal}</Text>
+        </View>
+        {/* <View style={styles.iconsRow}>
           <MaterialCommunityIcons name="truck" size={13} color="black" style={{opacity:0.8}} />
           <Foundation name="credit-card" size={15} color="black" style={{opacity:0.8}} />
           <Feather name="map-pin" size={12} color="black" style={{opacity:0.8}} />
-        </View>
+        </View> */}
       </View>
     </View>
   </TouchableWithoutFeedback>

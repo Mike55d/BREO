@@ -4,6 +4,7 @@ import {
 	Text,
 	ScrollView,
 	Image,
+	StatusBar,
 	RefreshControl,
 	Linking
 } from 'react-native';
@@ -53,7 +54,7 @@ const Home = ({navigation,dispatch,rubros , refresh, direccion, user}) =>{
 	)
 	
 	const sendWhatsApp = () =>{
-    Linking.openURL(`whatsapp://send?text=hola...&phone=+5493425327838`)
+    Linking.openURL(`whatsapp://send?text=hola...&phone=+5493425789748`)
   }
 
 	useEffect(()=>{
@@ -71,6 +72,8 @@ const Home = ({navigation,dispatch,rubros , refresh, direccion, user}) =>{
 	
 	return (
 		<>
+		<Loader/>
+    <StatusBar barStyle="dark-content" backgroundColor="#eeeeee"/>
 		<Header 
 		onSearch={onSearch}
 		placeholder="Buscar comercio"
@@ -79,7 +82,12 @@ const Home = ({navigation,dispatch,rubros , refresh, direccion, user}) =>{
 		navigation={navigation}
 		back={false}
 		/>
-		<Loader/>
+		{/* TOP BAR  */}
+		{direccion?(
+			<View style={styles.topBar}>
+				<Text style={{color:'white'}}>Domicilio: <Text style={{fontWeight:'bold',color:'white',}}>{direccion.provincia} {direccion.ciudad} {direccion.domicilio}</Text></Text>
+			</View>
+		):(null)}
 		<ScrollView
 			onScroll={({ nativeEvent }) => {
 				if (isCloseToBottom(nativeEvent)) {
@@ -90,12 +98,7 @@ const Home = ({navigation,dispatch,rubros , refresh, direccion, user}) =>{
 				<RefreshControl refreshing={refresh} onRefresh={onRefresh} />
 			}
 		>
-		{/* TOP BAR  */}
-		{direccion?(
-			<View style={styles.topBar}>
-				<Text>Domicilio: <Text style={{fontWeight:'bold'}}>{direccion.provincia} {direccion.ciudad} {direccion.domicilio}</Text></Text>
-			</View>
-		):(null)}
+		
 		<View style={styles.listContent}>
 			{rubros ? (
 				rubros.map(item =>
@@ -103,9 +106,8 @@ const Home = ({navigation,dispatch,rubros , refresh, direccion, user}) =>{
 				)
 			):(null)}
 		</View>
-		
-		</ScrollView>
-		<View style={styles.footer}>
+		{rubros ? (
+			<View style={styles.footer}>
 			<Text style={styles.textFooter}>Mandanos un WhatsApp ahora!</Text>
 				<TouchableWithoutFeedback onPress={() => sendWhatsApp()}>
 					<View style={{ backgroundColor: 'green', padding: 10, paddingTop: 6, borderRadius: 30 }}>
@@ -113,6 +115,10 @@ const Home = ({navigation,dispatch,rubros , refresh, direccion, user}) =>{
 					</View>
 				</TouchableWithoutFeedback>
 		</View>
+		):(null)}
+		
+		</ScrollView>
+		
 		</>
 	)
 }

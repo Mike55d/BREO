@@ -14,10 +14,11 @@ import {connect} from 'react-redux';
 import {loaderOn,loaderOff} from '../actions/loader';
 import {getAddress, setAddress} from '../actions/direccion';
 import Axios from 'axios';
-import {route} from '../actions/routePanel';
+import {routePanel} from '../actions/routePanel';
 
-const MiDireccion = ({navigation,dispatch , user, direccion}) => {
-  const [address,SetAddress] = useState();
+const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
+  const [address,SetAddress] = useState(direccion);
+  const back = route.params ? route.params.back : false;
 
   const getLocation = async() => {
     dispatch(loaderOn());
@@ -34,13 +35,19 @@ const MiDireccion = ({navigation,dispatch , user, direccion}) => {
       ciudad:addressLocation[0].city,
       calles:addressLocation[0].street,
       domicilio:addressLocation[0].name,
+      lat:location.coords.latitude,
+      long:location.coords.longitude
     })
     dispatch(loaderOff());
   }
 
   const updateAddress = () =>{
+    if(!address.provincia || !address.ciudad || !address.calles || !address.domicilio || !address.pisoDepto){
+      alert('Por favor llene todos los campos');
+      return;
+    }
     dispatch(loaderOn());
-    Axios.post(route+'users/updateAddress',address)
+    Axios.post(routePanel+'users/updateAddress',address)
     .then(response =>{
       alert('Direccion actualizada correctamente');
       dispatch(setAddress(address))
@@ -60,6 +67,11 @@ const MiDireccion = ({navigation,dispatch , user, direccion}) => {
   })
 
   useEffect(()=>{
+    console.log(address);
+  },[address])
+  
+
+  useEffect(()=>{
     if(direccion){
       SetAddress({...direccion,email:user.email});
     }
@@ -70,7 +82,7 @@ const MiDireccion = ({navigation,dispatch , user, direccion}) => {
     <Header
       showSearch={false}
       textHeader="Mi Direccion"
-      back={false}
+      back={back ? back:false}
       navigation={navigation}
     />
     <Text style={styles.textHead}>Datos de mi direccion</Text>
@@ -111,6 +123,23 @@ const MiDireccion = ({navigation,dispatch , user, direccion}) => {
             value={address.pisoDepto}
             onChangeText={(text) => SetAddress({...address,pisoDepto:text})}
           />
+          <TextInput
+            placeholderTextColor="gray"
+            placeholder="Latitud"
+            style={styles.formInput}
+            editable={false}
+            value={address.lat ? String(address.lat):''}
+            onChangeText={(text) => SetAddress({...address,lat:text})}
+          />
+          <TextInput
+            placeholderTextColor="gray"
+            placeholder="Longitud"
+            editable={false}
+            style={styles.formInput}
+            value={address.long ? String(address.long):''}
+            onChangeText={(text) => SetAddress({...address,long:text})}
+          />
+
           <TouchableHighlight
             style={styles.button}
             underlayColor="#d6efc7"

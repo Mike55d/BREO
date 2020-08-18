@@ -3,13 +3,13 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   header:{
     height:50,
-    backgroundColor:'#f0a500',
+    backgroundColor:'white',
     justifyContent:"center",
-    alignItems:"center"
+    alignItems:"center",
   },
   textItem:{
     fontWeight:"bold",
-    color:'#111d5e',
+    color:'#212a42',
     fontSize:16,
   },
   itemContainer:{
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   headerText:{
     fontSize:25,
-    color:'#111d5e',
+    color:'#212a42',
     fontWeight:'bold'
   }
 });

@@ -11,6 +11,7 @@ import Menu from '../Menu/Menu';
 import {connect} from 'react-redux';
 import * as GoogleSignIn from 'expo-google-sign-in';
 import {loginSuccess} from '../actions/auth'
+import Terminos from '../Terminos/Terminos';
 
 const Drawer = createDrawerNavigator();
 
@@ -44,6 +45,7 @@ const Drawer = createDrawerNavigator();
           <Drawer.Screen name="Comercio" component={Comercio} />
           <Drawer.Screen name="Pedido" component={Pedido} />
           <Drawer.Screen name="MiDireccion" component={MiDireccion} />
+          <Drawer.Screen name="Terminos" component={Terminos} />
           </>
         ):(
           <Drawer.Screen name="Login" component={Login} />

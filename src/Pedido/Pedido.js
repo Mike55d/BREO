@@ -8,6 +8,7 @@ import {
   Image,
   Switch,
   Linking,
+  SafeAreaView
 } from 'react-native';
 
 import Header from '../Header/Header';
@@ -85,7 +86,7 @@ const Card = ({item}) => {
   )
 }
 
-const Pedido = ({navigation , route , user}) => {
+const Pedido = ({navigation , route , user , direccion}) => {
   const pedido = route.params.pedido;
   const subtotoal = route.params.subtotal;
   const comercio = route.params.comercio;
@@ -102,12 +103,14 @@ const Pedido = ({navigation , route , user}) => {
   }
 
   const sendWhatsApp = () =>{
+    let urlMap = `https://www.google.com/maps/search/?api=1&query=${direccion.lat},${direccion.long}`;
+    let flatAddress = `${direccion.provincia} ${direccion.ciudad} ${direccion.calles} ${direccion.domicilio}`;
     let text = `Hola soy ${user.firstName} ${user.lastName} y este es mi pedido a través de la app BREO \n`;
     pedido.forEach(item =>{
       text+=`${item.producto.nombre} (x${item.cantidad}) \n`;
     });
     text+=`Aclaraciones: ${aclaraciones}\n`;
-    text+=`Mi dirección es: [URL de la ubicación Google Maps]\n`;
+    text+=`Mi dirección es: ${direccion.lat ? urlMap : flatAddress}\n`;
     text+=`Voy a solicitar el producto o servicio: ${recibir ? 'En el local':'A domicilio'} \n`;
     text+=`El pago será con: ${pago ? 'Tarjeta' : 'Efectivo' } \n`;
     text+=`Total: $${subtotoal}\n`;
@@ -118,15 +121,15 @@ const Pedido = ({navigation , route , user}) => {
   return (
     <>
       <Header
-        textHeader="Resumen del pedido"
+        textHeader={`${direccion.provincia} ${direccion.ciudad} ${direccion.domicilio}`}
         showSearch={false}
         navigation={navigation}
         back="Comercio"
       />
-      <View style={{ flex: 1 }}>
+      <ScrollView >
         {/* TOP BAR  */}
         <View style={[styles.topBar, { flex: 1.5 }]}>
-          <Text>Domicilio: <Text style={{ fontWeight: 'bold' }}>San Jeronimo 3167. Santa Fe</Text></Text>
+          {/* <Text>Domicilio: <Text style={{ fontWeight: 'bold' }}>{direccion.provincia} {direccion.ciudad} {direccion.domicilio}</Text></Text> */}
           <Recibir toggleRecibir={toggleRecibir} isEnabled={recibir}/>
           <Pago togglePago={togglePago} isEnabled={pago}/>
           <TextInput
@@ -156,14 +159,15 @@ const Pedido = ({navigation , route , user}) => {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <View style={styles.footerContainer}></View>
-      </View>
+        {/* <View style={styles.footerContainer}></View> */}
+      </ScrollView>
     </>
   )
 }
 
 const mapStateToProps = (state) => ({
-  user:state.auth
+  user:state.auth,
+  direccion:state.direccion
 })
 
 export default connect(mapStateToProps)(Pedido);

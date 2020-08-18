@@ -4,10 +4,10 @@
     "slug": "BREO",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/breoIcon.png",
     "splash": {
-      "image": "./assets/logo.png",
-      "resizeMode": "contain",
+      "image": "./assets/newSplash.png",
+      "resizeMode": "cover",
       "backgroundColor": "#f0a500"
     },
     "updates": {

@@ -5,14 +5,14 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     flex:1,
     padding:15,
-    paddingBottom:0,
+    paddingBottom:8,
     alignItems:'center',
     justifyContent:'center',
   },
   imageContainer:{
-    flex:1,
+    flex:1.2,
     zIndex:1,
-    height:80,
+    height:95,
     backgroundColor:'#438a5e',
     borderRadius:20,
     alignItems:'center',
@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
   },
   textContainer:{
     flex:3.5,
-    flexDirection:'row',
+    flexDirection:'column',
     backgroundColor:'#f5f5f5',
-    height:60,
+    height:85,
     marginLeft:-5,
     borderTopEndRadius:3,
     borderBottomEndRadius:3,
@@ -50,21 +50,38 @@ const styles = StyleSheet.create({
     elevation: 15,
   },
   textRow:{
-    flex:9,
-    padding:15,
+    flex:1,
+    marginTop:5,
+    paddingLeft:15,
     justifyContent:"center",
   },
   nombreComercio:{
-    fontSize:14,
+    fontSize:16,
+    fontWeight:'bold',
+    color:'#212A42'
   },
-  iconsRow:{
-    flex:1,
-    padding:1,
-    paddingBottom:5,
-    flexDirection:"column",
+  // iconsRow:{
+  //   flex:1,
+  //   padding:1,
+  //   paddingBottom:5,
+  //   flexDirection:"column",
+  //   alignItems:"center",
+  //   justifyContent:"space-between",
+  // },
+  containerIconText:{
+    flex:0.7,
+    flexDirection:'row',
     alignItems:"center",
-    justifyContent:"space-between",
+    paddingLeft:15,
+    paddingBottom:5,
   },
+  textIcon:{
+    flex:1,
+    marginRight:10,
+    fontSize:10,
+    marginLeft:5,
+    color:'#212A42',
+  }
 
 });
 

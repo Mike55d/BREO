@@ -25,9 +25,14 @@ const styles = StyleSheet.create({
   },
   googleButton:{
     width:180,
-    padding:10,
     alignItems:"center",
+    paddingRight:8,
     backgroundColor:'white'
+  },
+  googleIcon:{
+    resizeMode:'contain',
+    height:40,
+    width:40,
   }
 
 });

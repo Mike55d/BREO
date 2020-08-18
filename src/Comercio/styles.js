@@ -3,15 +3,16 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   topBarContainer:{
     paddingLeft:10,
-    backgroundColor:'#f0a500',
+    backgroundColor:'white',
     height:75,
   },
   textSlim:{
     fontWeight:"normal",
+
   },
   textBold:{
     fontWeight:"bold",
-    color:'white',
+    color:'#212a42',
     fontSize:15,
   },
   topbarIcons:{
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
   textIcon:{
     width:250,
     fontSize:11,
-    color:'white',
+    color:'#212a42',
     marginTop:1.5,
     marginLeft:5
   },
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   imageContainer:{
     flex:1,
     zIndex:1,
-    height:80,
+    height:85,
     backgroundColor:'#438a5e',
     borderRadius:20,
     alignItems:'center',
@@ -51,44 +52,48 @@ const styles = StyleSheet.create({
     flex:3.5,
     flexDirection:'row',
     backgroundColor:'#f5f5f5',
-    height:60,
-    marginLeft:-5,
-    borderTopEndRadius:3,
-    borderBottomEndRadius:3,
-    elevation: 3,
+    height:80,
+    marginLeft:-10,
+    elevation: 2,
+    borderTopEndRadius:8,
+    borderBottomEndRadius:8,
   },
   textRow:{
     flex:7,
-    paddingLeft:10
+    paddingLeft:18
   },
   headerCard:{
     fontSize:13,
+    color:'#212a42',
+    fontWeight:'bold'
   },
   textContent:{
+    marginRight:10,
     marginTop:2,
     fontSize:10,
     textAlign:"justify",
   },
   countRow:{
-    flex:3.5,
-    alignItems:"center",
-    justifyContent:"center",
-    paddingTop:8,
+    flex:1.5,
+    alignItems:"flex-end",
+    borderTopEndRadius:8,
+    borderBottomEndRadius:8,
   },
   counterContainer:{
     backgroundColor:'#e4e3e3',
-    borderRadius:10,
-    flexDirection:'row',
-    width:75,
+    borderTopEndRadius:8,
+    borderBottomEndRadius:8,
+    flexDirection:'column',
     elevation:2,
   },
   itemRow:{
     flex:1,
+    width:40,
     alignItems:'center',
     justifyContent:"center",
   },
   textDark:{
-    color:'#363636',
+    color:'#212a42',
   },
   subtotalContainer:{
     flexDirection:'row',
@@ -96,14 +101,22 @@ const styles = StyleSheet.create({
     padding:8,
     borderTopColor:'#e4e3e3',
     borderTopWidth:1.5,
+    backgroundColor:'#006dff'
   },
   footerContainer:{
     height:25,
-    backgroundColor:'#f0a500'
+    backgroundColor:'#006dff'
   },
   textTotal:{
     fontWeight:"bold",
-    color:'#111d5e'
+    color:'white',
+    textDecorationLine:'underline'
+  },
+  price:{
+    marginTop:10,
+    fontSize:12,
+    color:'#ff5e00',
+    fontWeight:'bold'
   }
 });
 

@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   topBar:{
+    backgroundColor:'#006DFF',
     borderBottomColor:'#e4e3e3',
     borderBottomWidth:2,
     padding:8
@@ -10,6 +11,7 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:"row",
     flexWrap:"wrap",
+    backgroundColor:"#f5f5f5"
   },
   card:{
     height:100,
@@ -24,14 +26,15 @@ const styles = StyleSheet.create({
   },
   textRubro:{
     fontSize:10,
+    color:'#212A42'
   },
   containerImage:{
-    backgroundColor:'gray',
+    backgroundColor:'white',
     height:75,
     alignItems:"center",
     justifyContent:'center',
     borderRadius:12,
-    elevation:10,
+    elevation:1
   },
   footer:{
     height:65,
@@ -42,6 +45,7 @@ const styles = StyleSheet.create({
   textFooter:{
     flex:1,
     fontWeight:"bold",
+    color:'#212A42'
   }
   
 });

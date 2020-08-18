@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   header:{
-    backgroundColor:'#f0a500',
+    backgroundColor:'white',
     height:50,
     flexDirection:"row",
   },
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   containerSearch:{
     flexDirection:"row",
-    backgroundColor:'white',
+    backgroundColor:'#f5f5f5',
     alignItems:"center",
     justifyContent:"center",
     paddingLeft:15,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   inputSearch:{
     width:180,
-    height:35
+    height:38,
   },
   searchIcon:{
     resizeMode:"contain",
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   textHeader:{
     fontWeight:"bold",
-    color:'#111d5e',
+    color:'#212A42',
     fontSize:16
   }
 });

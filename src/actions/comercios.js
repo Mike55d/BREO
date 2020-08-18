@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import {route} from './routePanel';
+import {routePanel} from './routePanel';
 import {loaderOn,loaderOff} from './loader';
 import {refreshOn,refreshOff} from './refresh';
 
@@ -14,7 +14,7 @@ export const getComercios = (type,param,refresh = false) =>(
     const loadOff = refresh ? refreshOff : loaderOff;
     const endpoint = type == 'palabras' ? `comercios/search` : `comercios/${param}/all`;
     dispatch(loadOn());
-    Axios.post(route+endpoint,{words:param})
+    Axios.post(routePanel+endpoint,{words:param})
     .then(res =>{
       dispatch(loadOff());
       dispatch(setComercios(res.data));

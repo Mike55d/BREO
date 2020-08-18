@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { loaderOn, loaderOff } from './loader';
-import {route} from './routePanel';
+import {routePanel} from './routePanel';
 
 export const loginSuccess = (user) =>({
   type:'LOGIN_SUCCESS',
@@ -13,7 +13,7 @@ export const logout = () =>({
 
 export const login = (user) => (
   (dispatch) => {
-    Axios.post(route+'users/saveUser',user)
+    Axios.post(routePanel+'users/saveUser',user)
     .then(response =>{
       dispatch(loginSuccess(user));
       dispatch(loaderOff());

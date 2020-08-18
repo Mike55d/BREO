@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import {route} from './routePanel';
+import {routePanel} from './routePanel';
 import {loaderOn,loaderOff} from './loader';
 import {refreshOn,refreshOff} from './refresh';
 
@@ -13,7 +13,7 @@ export const getRubros = (refresh= false) =>(
     const loadOn = refresh ? refreshOn : loaderOn;
     const loadOff = refresh ? refreshOff : loaderOff;
     dispatch(loadOn());
-    Axios.get(route+'rubros/')
+    Axios.get(routePanel+'rubros/')
     .then(res =>{
       dispatch(loadOff());
       dispatch(setRubros(res.data));

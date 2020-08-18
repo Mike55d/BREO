@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { loaderOn, loaderOff } from './loader';
-import {route} from './routePanel';
+import {routePanel} from './routePanel';
 
 export const setAddress = (address) =>({
   type:'SET_ADDRESS',
@@ -10,7 +10,7 @@ export const setAddress = (address) =>({
 export const getAddress = (email) =>(
   (dispatch)=>{
     dispatch(loaderOn());
-    Axios.post(route+'users/getAddress',{email:email})
+    Axios.post(routePanel+'users/getAddress',{email:email})
     .then(response =>{
       dispatch(loaderOff());
       dispatch(setAddress(response.data));

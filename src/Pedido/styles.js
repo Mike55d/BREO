@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius:20,
     marginLeft:15,
     marginRight:15,
-    flex:2
+    height:'50%'
   },
   switch:{
     width:55,

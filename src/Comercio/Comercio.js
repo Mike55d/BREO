@@ -3,7 +3,6 @@ import {
   View,
   Text,
   ScrollView,
-  TextInput,
   TouchableWithoutFeedback,
   Image,
   RefreshControl,
@@ -19,21 +18,22 @@ import { AntDesign } from '@expo/vector-icons';
 import {connect} from 'react-redux';
 import {routeImages} from '../actions/routePanel';
 import {getProductos} from '../actions/productos';
+import { Ionicons } from '@expo/vector-icons';
 
 const TopBar = ({comercio}) => {
   return (
     <View style={styles.topBarContainer}>
-      <Text numberOfLines={1} style={styles.textBold}>{comercio.nombre}<Text style={styles.textSlim}>({comercio.rubro.nombre})</Text></Text>
+      <Text numberOfLines={1} style={styles.textBold}>{comercio.nombre}<Text style={styles.textSlim}> ({comercio.rubro.nombre})</Text></Text>
       <View style={styles.topbarIcons}>
-        <MaterialCommunityIcons name="truck" size={13} color="#111d5e" style={{ opacity: 0.8 }} />
-        <Text numberOfLines={1} style={styles.textIcon}>Horarios de envio {comercio.horario}</Text>
+        <MaterialCommunityIcons name="truck" size={13} color="#ff5e00"  />
+        <Text numberOfLines={1} style={styles.textIcon}>{comercio.horario}</Text>
       </View>
       <View style={styles.topbarIcons}>
-        <Foundation name="credit-card" size={15} color="#111d5e" style={{ opacity: 0.8 }} />
-          <Text numberOfLines={1} style={styles.textIcon}>Formas de pago con tarjeta {comercio.pagoTarjeta}</Text>
+        <Foundation name="credit-card" size={15} color="#ff5e00"  />
+          <Text numberOfLines={1} style={styles.textIcon}>{comercio.pagoTarjeta}</Text>
       </View>
       <View style={styles.topbarIcons}>
-        <Feather name="map-pin" size={12} color="#111d5e" style={{ opacity: 0.8 }} />
+        <Feather name="map-pin" size={12} color="#ff5e00"  />
         <Text numberOfLines={1} style={styles.textIcon}>{comercio.dirLocal}</Text>
       </View>
     </View>
@@ -57,42 +57,43 @@ const Card = ({item , updatePedido}) => {
       <View style={styles.imageContainer}>
         <Image
           style={styles.cardImage}
-          source={{uri:routeImages+item.imagen}}
+          source={{ uri: routeImages + item.imagen }}
         />
       </View>
       <View style={styles.textContainer}>
         <View style={styles.textRow}>
           <Text style={[styles.headerCard, styles.textDark]}>{item.nombre}</Text>
-  <Text numberOfLines={2} style={[styles.textContent ,styles.textDark]}>{item.descripcion}</Text>
+          <Text numberOfLines={2} style={[styles.textContent, styles.textDark]}>{item.descripcion}</Text>
+          <Text style={styles.price}>${item.precio}</Text>
         </View>
         <View style={styles.countRow}>
           <View style={styles.counterContainer}>
             <View style={styles.itemRow}>
               <TouchableWithoutFeedback
-                onPress={() => decrease()}
+                onPress={() => increase()}
               >
-              <AntDesign name="minus" size={16} color="#111d5e" />
+                <Ionicons name="md-arrow-dropup" size={24} color="#ff5e00" />
               </TouchableWithoutFeedback>
             </View>
             <View style={styles.itemRow}>
-              <Text style={{color:'#111d5e'}}>{count}</Text>
+              <Text style={{ color: '#212a42' , fontWeight:"bold",fontSize:18}}>{count}</Text>
             </View>
             <View style={styles.itemRow}>
               <TouchableWithoutFeedback
-                onPress={() => increase()}
+                onPress={() => decrease()}
               >
-              <FontAwesome5 name="plus" size={10} color="#111d5e" />
+                <Ionicons name="md-arrow-dropdown" size={24} color="#ff5e00" />
               </TouchableWithoutFeedback>
             </View>
           </View>
-          <Text style={{fontSize:12,padding:5 , color:'#111d5e'}}>${item.precio}</Text>
+
         </View>
       </View>
     </View>
   )
 }
 
-const Comercio = ({navigation, dispatch , route , productos , refresh}) => {
+const Comercio = ({navigation, dispatch , route , productos , refresh , direccion}) => {
   const comercio = route.params.comercio;
   const [pedido,setPedido] = useState([]);
   const [subtotal,setSubtotal] = useState(0);
@@ -141,6 +142,19 @@ const Comercio = ({navigation, dispatch , route , productos , refresh}) => {
       setPedido([]);
   },[route.params.comercio]);
 
+  const verPedido = () =>{
+    let paramsRoute;
+    let view;
+    if(direccion.provincia){
+      paramsRoute = {pedido:pedido,comercio:comercio,subtotal:subtotal};
+      view = 'Pedido';
+    }else{
+      paramsRoute = {back:'Comercio'};
+      view = 'MiDireccion';
+    }
+    navigation.navigate(view,paramsRoute);
+  }
+
   return (
     <>
     <Header
@@ -165,16 +179,16 @@ const Comercio = ({navigation, dispatch , route , productos , refresh}) => {
       </ScrollView>
         {subtotal?(
           <View style={styles.subtotalContainer}>
-            <Text>Subtotal del pedido: <Text style={styles.textTotal}>${subtotal}</Text></Text>
+            <Text style={{color:'white'}}>Subtotal del pedido: <Text style={styles.textTotal}>${subtotal}</Text></Text>
             <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('Pedido',{pedido:pedido,comercio:comercio,subtotal:subtotal})}
+              onPress={() => verPedido()}
             >
               <Text style={styles.textTotal}>Ver resumen</Text>
             </TouchableWithoutFeedback>
           </View>
         ):(null)}
-        <View style={styles.footerContainer}>
-        </View>
+        {/* <View style={styles.footerContainer}>
+        </View> */}
     </>
   )
 }
@@ -182,6 +196,8 @@ const Comercio = ({navigation, dispatch , route , productos , refresh}) => {
 const mapStateToProps = (state) =>({
   productos:state.productos,
   refresh:state.refresh,
+  direccion:state.direccion
+
 })
 
 export default connect(mapStateToProps)(Comercio);

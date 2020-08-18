@@ -11,7 +11,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 
-const Home = ({onSearch , placeholder , showSearch , textHeader, navigation , back}) =>{
+const Header = ({onSearch , placeholder , showSearch , textHeader, navigation , back}) =>{
   const [words,setWords] = useState('');
 
   return (
@@ -23,7 +23,7 @@ const Home = ({onSearch , placeholder , showSearch , textHeader, navigation , ba
             <TouchableWithoutFeedback
               onPress={() => navigation.navigate(back)}
             >
-            <Ionicons name="md-arrow-round-back" size={25} color="#111d5e" />
+            <Ionicons name="md-arrow-round-back" size={25} color="#FF5E00" />
             </TouchableWithoutFeedback>
           ):(
             null
@@ -45,13 +45,13 @@ const Home = ({onSearch , placeholder , showSearch , textHeader, navigation , ba
             </View>
           ) : (
               <>
-                <Text style={styles.textHeader}>{textHeader}</Text>
+                <Text numberOfLines={1} style={styles.textHeader}>{textHeader}</Text>
               </>
             )}
         </View>
         <View style={styles.rightContainer}>
           <TouchableWithoutFeedback onPress={() => navigation.openDrawer()}>
-            <Entypo name="menu" size={28} color="#111d5e" />
+            <Entypo name="menu" size={28} color="#FF5E00" />
           </TouchableWithoutFeedback>
         </View>
       </View>
@@ -59,4 +59,4 @@ const Home = ({onSearch , placeholder , showSearch , textHeader, navigation , ba
   )
 }
 
-export default Home;
+export default Header;

@@ -42,6 +42,7 @@ const Login = ({dispatch}) =>{
 
   return (
     <>
+    <StatusBar backgroundColor="gray"/>
     <Loader/>
     <ImageBackground 
     source={require('../../assets/background.png')}
@@ -58,7 +59,10 @@ const Login = ({dispatch}) =>{
           style={styles.googleButton}
           onPress={()=> signInAsync()}
           >
-            <Text>Sign in with Google</Text>
+            <View style={{flexDirection:'row',alignItems:"center"}}>
+              <Image source={require('../../assets/images/googleIcon.png')} style={styles.googleIcon}></Image>
+              <Text>Sign in with Google</Text>
+            </View>
           </TouchableHighlight>
         </View>
       </View>
