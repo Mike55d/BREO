@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   },
   textSlim:{
     fontWeight:"normal",
-
   },
   textBold:{
     fontWeight:"bold",
@@ -29,66 +28,43 @@ const styles = StyleSheet.create({
   cardContainer:{
     flexDirection:'row',
     flex:1,
-    padding:8,
-    alignItems:'center',
-    justifyContent:'center',
+    backgroundColor:'white',
+    margin:10,
+    height:95,
+    borderRadius:8,
+    elevation:3,
   },
   imageContainer:{
-    flex:1,
-    zIndex:1,
-    height:85,
-    backgroundColor:'#438a5e',
-    borderRadius:20,
-    alignItems:'center',
-    justifyContent:'center',
-    elevation: 3,
+    flex:2.8,
   },
   cardImage:{
+    flex:1,
     resizeMode:'contain',
-    height:75,
-    width:80,
   },
   textContainer:{
-    flex:3.5,
-    flexDirection:'row',
-    backgroundColor:'#f5f5f5',
-    height:80,
-    marginLeft:-10,
-    elevation: 2,
-    borderTopEndRadius:8,
-    borderBottomEndRadius:8,
-  },
-  textRow:{
+    padding:5,
     flex:7,
-    paddingLeft:18
+    flexDirection:'column',
   },
   headerCard:{
-    fontSize:13,
+    fontSize:16,
     color:'#212a42',
     fontWeight:'bold'
   },
   textContent:{
-    marginRight:10,
+    marginRight:3,
     marginTop:2,
     fontSize:10,
     textAlign:"justify",
   },
-  countRow:{
-    flex:1.5,
-    alignItems:"flex-end",
-    borderTopEndRadius:8,
-    borderBottomEndRadius:8,
-  },
   counterContainer:{
-    backgroundColor:'#e4e3e3',
-    borderTopEndRadius:8,
-    borderBottomEndRadius:8,
+    flex:1.6,
     flexDirection:'column',
-    elevation:2,
+    borderLeftColor:'#f5f5f5',
+    borderLeftWidth:3,
   },
   itemRow:{
     flex:1,
-    width:40,
     alignItems:'center',
     justifyContent:"center",
   },
@@ -113,9 +89,9 @@ const styles = StyleSheet.create({
     textDecorationLine:'underline'
   },
   price:{
-    marginTop:10,
-    fontSize:12,
-    color:'#ff5e00',
+    marginTop:3,
+    fontSize:14,
+    color:'#212a42',
     fontWeight:'bold'
   }
 });

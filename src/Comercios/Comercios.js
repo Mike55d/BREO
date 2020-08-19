@@ -34,22 +34,18 @@ const Card = ({item , onPress}) => {
           <Text style={styles.nombreComercio}>{item.nombre}</Text>
         </View>
         <View style={styles.containerIconText}>
-        <MaterialCommunityIcons name="truck" size={14} color="#ff5e00" />
+          <FontAwesome5 name="store-alt" size={12} color="#212A42" />
+          <Text numberOfLines={1} style={styles.textIcon}>{item.dirLocal}</Text>
+        </View>
+        <View style={styles.containerIconText}>
+        <MaterialCommunityIcons name="truck" size={14} color="#212A42" />
           <Text numberOfLines={1} style={styles.textIcon}>{item.horario}</Text>
         </View>
         <View style={styles.containerIconText}>
-        <Foundation name="credit-card" size={16} color="#ff5e00" />
+        <Foundation name="credit-card" size={16} color="#212A42" />
           <Text numberOfLines={1} style={styles.textIcon}>{item.pagoTarjeta}</Text>
         </View>
-        <View style={styles.containerIconText}>
-          <FontAwesome5 name="store-alt" size={12} color="#ff5e00" />
-          <Text numberOfLines={1} style={styles.textIcon}>{item.dirLocal}</Text>
-        </View>
-        {/* <View style={styles.iconsRow}>
-          <MaterialCommunityIcons name="truck" size={13} color="black" style={{opacity:0.8}} />
-          <Foundation name="credit-card" size={15} color="black" style={{opacity:0.8}} />
-          <Feather name="map-pin" size={12} color="black" style={{opacity:0.8}} />
-        </View> */}
+        
       </View>
     </View>
   </TouchableWithoutFeedback>
@@ -57,7 +53,7 @@ const Card = ({item , onPress}) => {
 }
 
 
-const Comercios = ({navigation , dispatch , route , comercios , refresh}) => {
+const Comercios = ({navigation , dispatch , route , comercios , refresh , loader}) => {
   const palabras = route.params.palabras;
   const rubro = route.params.rubro;
 
@@ -102,7 +98,7 @@ const Comercios = ({navigation , dispatch , route , comercios , refresh}) => {
           <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
         }
       >
-        {comercios ? (
+        {comercios && !loader ? (
           comercios.map(item =>
               <Card onPress={onPressComercio} key={item.id} item={item}/>
             )
@@ -114,6 +110,7 @@ const Comercios = ({navigation , dispatch , route , comercios , refresh}) => {
 const mapStateToProps = (state) =>({
   comercios:state.comercios,
   refresh:state.refresh,
+	loader:state.loader
 
 })
 export default connect(mapStateToProps)(Comercios);

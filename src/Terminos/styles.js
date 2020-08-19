@@ -7,9 +7,11 @@ const styles = StyleSheet.create({
   title:{
     fontSize:24,
     fontWeight:"bold",
+    color:'#212a42',
   },
   content:{
     textAlign:"justify",
+    color:'#212a42'
   },
   containerText:{
     marginBottom:15

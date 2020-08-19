@@ -46,7 +46,12 @@ const styles = StyleSheet.create({
     flex:1,
     fontWeight:"bold",
     color:'#212A42'
-  }
+  },
+  waIcon:{
+    resizeMode:'contain',
+    height:70,
+    width:70,
+  },
   
 });
 

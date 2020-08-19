@@ -35,7 +35,7 @@ const Card = ({item , onPress}) => (
 
 
 
-const Home = ({navigation,dispatch,rubros , refresh, direccion, user}) =>{
+const Home = ({navigation,dispatch,rubros , refresh, direccion, user }) =>{
 
 	const onRefresh = React.useCallback(() => {
 		dispatch(getRubros(true));
@@ -110,9 +110,10 @@ const Home = ({navigation,dispatch,rubros , refresh, direccion, user}) =>{
 			<View style={styles.footer}>
 			<Text style={styles.textFooter}>Mandanos un WhatsApp ahora!</Text>
 				<TouchableWithoutFeedback onPress={() => sendWhatsApp()}>
-					<View style={{ backgroundColor: 'green', padding: 10, paddingTop: 6, borderRadius: 30 }}>
-						<FontAwesome5 name="whatsapp" size={25} color="white" />
-					</View>
+				<Image
+              style={styles.waIcon}
+              source={require('../../assets/waIcon.png')}
+            />
 				</TouchableWithoutFeedback>
 		</View>
 		):(null)}
@@ -127,7 +128,7 @@ const mapStateToProps = (state) =>({
 	rubros:state.rubros,
 	refresh:state.refresh,
 	user:state.auth,
-	direccion:state.direccion
+	direccion:state.direccion,
 })
 
 export default connect(mapStateToProps)(Home);

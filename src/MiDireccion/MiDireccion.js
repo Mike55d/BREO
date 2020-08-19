@@ -5,6 +5,8 @@ import {
   Text,
   TouchableHighlight,
   TouchableWithoutFeedback,
+  ToastAndroid,
+  Alert
 } from 'react-native';
 
 import styles from './styles';
@@ -31,10 +33,10 @@ const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
     console.log(addressLocation[0]);
     SetAddress({
       ...address,
-      provincia:addressLocation[0].region,
-      ciudad:addressLocation[0].city,
-      calles:addressLocation[0].street,
-      domicilio:addressLocation[0].name,
+      // provincia:addressLocation[0].region,
+      // ciudad:addressLocation[0].city,
+      // calles:addressLocation[0].street,
+      // domicilio:addressLocation[0].name,
       lat:location.coords.latitude,
       long:location.coords.longitude
     })
@@ -43,13 +45,13 @@ const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
 
   const updateAddress = () =>{
     if(!address.provincia || !address.ciudad || !address.calles || !address.domicilio || !address.pisoDepto){
-      alert('Por favor llene todos los campos');
+      Alert.alert('Campos incompletos','Por favor llene todos los campos');
       return;
     }
     dispatch(loaderOn());
     Axios.post(routePanel+'users/updateAddress',address)
     .then(response =>{
-      alert('Direccion actualizada correctamente');
+      ToastAndroid.show('Direccion actualizada',ToastAndroid.SHORT)
       dispatch(setAddress(address))
       dispatch(loaderOff());
     })
@@ -85,7 +87,7 @@ const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
       back={back ? back:false}
       navigation={navigation}
     />
-    <Text style={styles.textHead}>Datos de mi direccion</Text>
+    {/* <Text style={styles.textHead}>Datos de mi direccion</Text> */}
       {address ? (
         <View style={styles.formContainer}>
           <TextInput
@@ -139,13 +141,12 @@ const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
             value={address.long ? String(address.long):''}
             onChangeText={(text) => SetAddress({...address,long:text})}
           />
-
           <TouchableHighlight
             style={styles.button}
             underlayColor="#d6efc7"
             onPress={() => getLocation()}
           >
-            <Text style={{ color: '#393e46' }}>Detectar Ubicacion</Text>
+            <Text style={{ color: '#212a42' }}>Detectar Ubicacion</Text>
           </TouchableHighlight>
           <TouchableWithoutFeedback
             onPress={() => updateAddress()}

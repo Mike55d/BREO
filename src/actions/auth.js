@@ -19,7 +19,7 @@ export const login = (user) => (
       dispatch(loaderOff());
     })
     .catch(error => {
-      alert('error'+error);
+      alert('blue'+error);
       dispatch(loaderOff());
     });
     

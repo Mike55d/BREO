@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     borderColor:'gray',
     borderWidth:1,
     borderRadius:20,
+    backgroundColor:'white'
   },
   textHead:{
     margin:8,
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
   },
   formContainer:{
     paddingLeft:15,
-    paddingRight:15
+    paddingRight:15,
   },
   button:{
     marginTop:15,
@@ -25,10 +26,13 @@ const styles = StyleSheet.create({
     borderRadius:20,
     justifyContent:"center",
     alignItems:"center",
+    backgroundColor:'white'
+
   },
   textActualizar:{
     fontWeight:"bold",
     textDecorationLine:"underline",
+    color:'#212a42'
   },
   buttonActualizar:{
     marginTop:10,

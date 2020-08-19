@@ -1,34 +1,46 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-  topBar:{
+  bottomBar:{
     padding:10,
+    height:400,
+    elevation:10,
+    backgroundColor:'white'
   },
   switchRow:{
-    marginTop:10,
-    marginBottom:10,
+    marginTop:15,
+    marginBottom:15,
     flexDirection:'row'
   },
   switchContainer:{
-    flex:2,
+    flex:1,
     flexDirection:'row',
     justifyContent:"center",
     alignItems:"center"
   },
   containerCards:{
-    borderColor:'gray',
-    borderWidth:1,
-    borderRadius:20,
-    marginLeft:15,
-    marginRight:15,
-    height:'50%'
-  },
-  switch:{
-    width:55,
+    marginTop:5,
+    marginLeft:10,
+    marginRight:10,
+    height:300,
   },
   textSwitchContainer:{
     flex:0.5,
     justifyContent:"center"
+  },
+  buttonSwitch:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'#ff5e00',
+    paddingBottom:8,
+    paddingTop:8,
+    paddingRight:15,
+    paddingLeft:15,
+    marginRight:10,
+    borderRadius:20,
+    height:35,
+    width:110
   },
   aclaracionInput:{
     marginTop:15,
@@ -38,45 +50,41 @@ const styles = StyleSheet.create({
     borderRadius:20,
   },
   cardContainer:{
+    height:60,
     flexDirection:'row',
     flex:1,
-    padding:8,
+    backgroundColor:'white',
     alignItems:'center',
     justifyContent:'center',
+    borderRadius:8,
+    marginBottom:8,
+    marginLeft:5,
+    marginRight:5,
+    marginTop:8,
+    elevation:3,
   },
   imageContainer:{
-    flex:1,
-    zIndex:1,
-    height:80,
-    backgroundColor:'#438a5e',
-    borderRadius:20,
+    flex:0.8,
     alignItems:'center',
     justifyContent:'center',
-    elevation: 3,
   },
   cardImage:{
     resizeMode:'contain',
-    height:75,
-    width:80,
+    height:55,
+    width:55,
   },
   textContainer:{
     flex:3.5,
     flexDirection:'row',
-    backgroundColor:'#f5f5f5',
-    height:60,
-    marginLeft:-5,
-    borderTopEndRadius:3,
-    borderBottomEndRadius:3,
-    elevation: 3,
   },
   quantityRow:{
-    flex:1.5,
+    flex:2,
     alignItems:'center',
     justifyContent:'center',
   },
   textRow:{
     flex:7,
-    paddingLeft:10,
+    paddingLeft:15,
     justifyContent:"center"
   },
   itemRow:{
@@ -85,12 +93,21 @@ const styles = StyleSheet.create({
     justifyContent:"center",
   },
   textDark:{
-    color:'#363636',
+    color:'#212a42',
   },
   footerContainer:{
     height:25,
     backgroundColor:'#f0a500'
   },
+  waIcon:{
+    resizeMode:'contain',
+    height:70,
+    width:70,
+  },
+  waText:{
+    fontSize:10,
+    color:'#212a42'
+  }
 });
 
 export default styles;

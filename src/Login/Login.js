@@ -42,7 +42,7 @@ const Login = ({dispatch}) =>{
 
   return (
     <>
-    <StatusBar backgroundColor="gray"/>
+    <StatusBar barStyle="dark-content" backgroundColor="#eeeeee"/>
     <Loader/>
     <ImageBackground 
     source={require('../../assets/background.png')}
