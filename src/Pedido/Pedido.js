@@ -6,9 +6,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Image,
-  Switch,
   Linking,
-  SafeAreaView
 } from 'react-native';
 
 import Header from '../Header/Header';
@@ -31,7 +29,14 @@ const Recibir = ({toggleRecibir , isEnabled}) =>{
         onPress={()=> toggleRecibir()}
       >
         <View style={[styles.buttonSwitch,{backgroundColor:!isEnabled?'#ff5e00':'#f5f5f5'}]}>
-        <MaterialCommunityIcons name="truck" size={24} color={!isEnabled?'white':'gray'}  />
+        
+        <Image 
+          fadeDuration={0}
+          style={{height:21,width:21,resizeMode:'contain'}}
+          source={!isEnabled?
+          require('../../assets/icons/truckW.png'):
+          require('../../assets/icons/truckG.png')
+        }/>
           <Text style={{color:!isEnabled?'white':'#212a42',marginLeft:8 , fontSize:10}}>a domicilio</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -39,7 +44,13 @@ const Recibir = ({toggleRecibir , isEnabled}) =>{
         onPress={()=> toggleRecibir()}
       >
         <View style={[styles.buttonSwitch,{backgroundColor:isEnabled?'#ff5e00':'#f5f5f5'}]}>
-        <FontAwesome5 name="store-alt" size={15} color={isEnabled?'white':'gray'} />
+        <Image 
+          fadeDuration={0}
+          style={{height:21,width:21,resizeMode:'contain'}}
+          source={isEnabled?
+          require('../../assets/icons/storeW.png'):
+          require('../../assets/icons/storeG.png')
+        }/>
           <Text style={{color:isEnabled?'white':'#212a42',marginLeft:8 , fontSize:10}}>en sucursal</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -59,7 +70,7 @@ const Pago = ({togglePago , isEnabled}) =>{
         onPress={()=> togglePago()}
       >
         <View style={[styles.buttonSwitch,{backgroundColor:!isEnabled?'#ff5e00':'#f5f5f5'}]}>
-        <MaterialCommunityIcons name="cash-usd" size={32} color={!isEnabled?'white':'gray'} />
+        <MaterialCommunityIcons name="cash-usd" size={28} color={!isEnabled?'white':'gray'} />
           <Text style={{color:!isEnabled?'white':'#212a42',marginLeft:3 , fontSize:10}}>en efectivo</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -67,7 +78,13 @@ const Pago = ({togglePago , isEnabled}) =>{
         onPress={()=> togglePago()}
       >
         <View style={[styles.buttonSwitch,{backgroundColor:isEnabled?'#ff5e00':'#f5f5f5'}]}>
-        <Foundation name="credit-card" size={26} color={isEnabled?'white':'gray'} />
+        <Image 
+          fadeDuration={0}
+          style={{height:22,width:22,resizeMode:'contain'}}
+          source={isEnabled?
+          require('../../assets/icons/cardW.png'):
+          require('../../assets/icons/cardG.png')
+        }/>
           <Text style={{color:isEnabled?'white':'#212a42',marginLeft:8 , fontSize:10}}>con tarjeta</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -116,7 +133,7 @@ const Pedido = ({navigation , route , user , direccion}) => {
   const sendWhatsApp = () =>{
     let urlMap = 'https://www.google.com/maps/search/';
     urlMap+='?api=1%26query='+direccion.lat+','+direccion.long;
-    let flatAddress = `${direccion.provincia} ${direccion.ciudad} ${direccion.calles} ${direccion.domicilio}`;
+    let flatAddress = `${direccion.provincia} ${direccion.ciudad} ${direccion.calles} ${direccion.calle} ${direccion.pisoDepto}`;
     let text = `Hola soy ${user.firstName} ${user.lastName} y este es mi pedido a través de la app BREO \n`;
     pedido.forEach(item =>{
       text+=`${item.producto.nombre} (x${item.cantidad}) \n`;

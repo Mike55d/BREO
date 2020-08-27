@@ -22,38 +22,15 @@ const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
   const [address,SetAddress] = useState(direccion);
   const back = route.params ? route.params.back : false;
 
-  const getLocation = async() => {
-    dispatch(loaderOn());
-    let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-      }
-    let location = await Location.getCurrentPositionAsync({});
-    let addressLocation = await Location.reverseGeocodeAsync(location.coords);
-    console.log(addressLocation[0]);
-    SetAddress({
-      ...address,
-      // provincia:addressLocation[0].region,
-      // ciudad:addressLocation[0].city,
-      // calles:addressLocation[0].street,
-      // domicilio:addressLocation[0].name,
-      lat:location.coords.latitude,
-      long:location.coords.longitude
-    })
-    dispatch(loaderOff());
-  }
-
   const updateAddress = () =>{
-    if(!address.provincia || !address.ciudad || !address.calles || !address.domicilio || !address.pisoDepto){
-      Alert.alert('Campos incompletos','Por favor llene todos los campos');
-      return;
-    }
+    console.log('request',address);
     dispatch(loaderOn());
     Axios.post(routePanel+'users/updateAddress',address)
     .then(response =>{
-      ToastAndroid.show('Direccion actualizada',ToastAndroid.SHORT)
-      dispatch(setAddress(address))
+      ToastAndroid.show('Direccion actualizada',ToastAndroid.SHORT);
+      dispatch(setAddress(address));
       dispatch(loaderOff());
+      SetAddress({...address,email:null});
     })
     .catch(error=>{
       console.log(error);
@@ -62,22 +39,36 @@ const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
   }
 
 
-  useEffect(()=>{
-    if(!direccion){
-      dispatch(getAddress(user.email));
+
+  const getLocation = async() => {
+    if(!address.provincia || !address.ciudad || !address.calles || !address.calle || !address.pisoDepto){
+      Alert.alert('Campos incompletos','Por favor llene todos los campos');
+      return;
     }
-  })
+    dispatch(loaderOn());
+    let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+      }
+    let addressString = `${address.provincia} ${address.ciudad} ${address.calle} ${address.numero}`
+    let addressLocation = await Location.geocodeAsync(addressString);
+    console.log('location',addressLocation[0].longitude);
+    SetAddress({
+      ...address,
+      lat:addressLocation[0].latitude,
+      long:addressLocation[0].longitude,
+      email:user.email
+    });
+    dispatch(loaderOff());
+  }
 
   useEffect(()=>{
-    console.log(address);
+    console.log('effect',address);
+    if(address.email){
+      console.log('hay email');
+      updateAddress();
+    }
   },[address])
-  
-
-  useEffect(()=>{
-    if(direccion){
-      SetAddress({...direccion,email:user.email});
-    }
-  },[direccion]);
 
   return (
     <>
@@ -87,7 +78,6 @@ const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
       back={back ? back:false}
       navigation={navigation}
     />
-    {/* <Text style={styles.textHead}>Datos de mi direccion</Text> */}
       {address ? (
         <View style={styles.formContainer}>
           <TextInput
@@ -106,10 +96,17 @@ const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
           />
           <TextInput
             placeholderTextColor="gray"
-            placeholder="Domicilio *"
+            placeholder="Calle *"
             style={styles.formInput}
-            value={address.domicilio}
-            onChangeText={(text) => SetAddress({...address,domicilio:text})}
+            value={address.calle}
+            onChangeText={(text) => SetAddress({...address,calle:text})}
+          />
+          <TextInput
+            placeholderTextColor="gray"
+            placeholder="Numero *"
+            style={styles.formInput}
+            value={address.numero}
+            onChangeText={(text) => SetAddress({...address,numero:text})}
           />
           <TextInput
             placeholderTextColor="gray"
@@ -120,41 +117,18 @@ const MiDireccion = ({navigation,dispatch , user, direccion , route}) => {
           />
           <TextInput
             placeholderTextColor="gray"
-            placeholder="Piso / depto *"
+            placeholder="Piso / depto o caracteristicas *"
             style={styles.formInput}
             value={address.pisoDepto}
             onChangeText={(text) => SetAddress({...address,pisoDepto:text})}
-          />
-          <TextInput
-            placeholderTextColor="gray"
-            placeholder="Latitud"
-            style={styles.formInput}
-            editable={false}
-            value={address.lat ? String(address.lat):''}
-            onChangeText={(text) => SetAddress({...address,lat:text})}
-          />
-          <TextInput
-            placeholderTextColor="gray"
-            placeholder="Longitud"
-            editable={false}
-            style={styles.formInput}
-            value={address.long ? String(address.long):''}
-            onChangeText={(text) => SetAddress({...address,long:text})}
           />
           <TouchableHighlight
             style={styles.button}
             underlayColor="#d6efc7"
             onPress={() => getLocation()}
           >
-            <Text style={{ color: '#212a42' }}>Detectar Ubicacion</Text>
+            <Text style={{ color: '#212a42' }}>Confirmar Ubicacion</Text>
           </TouchableHighlight>
-          <TouchableWithoutFeedback
-            onPress={() => updateAddress()}
-          >
-            <View style={styles.buttonActualizar}>
-              <Text style={styles.textActualizar}>Actualizar</Text>
-            </View>
-          </TouchableWithoutFeedback>
         </View>
       ) : (null)}
     </>

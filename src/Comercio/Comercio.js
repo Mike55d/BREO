@@ -25,15 +25,15 @@ const TopBar = ({comercio}) => {
     <View style={styles.topBarContainer}>
       <Text numberOfLines={1} style={styles.textBold}>{comercio.nombre}<Text style={styles.textSlim}> ({comercio.rubro.nombre})</Text></Text>
       <View style={styles.topbarIcons}>
-        <FontAwesome5 name="store-alt" size={12} color="#212A42" />
+        <Image style={{height:16,width:16,resizeMode:'contain'}} source={require('../../assets/icons/store.png')} />
         <Text numberOfLines={1} style={styles.textIcon}>{comercio.dirLocal}</Text>
       </View>
       <View style={styles.topbarIcons}>
-        <MaterialCommunityIcons name="truck" size={13} color="#212A42"  />
+      <Image style={{height:15,width:15,resizeMode:'contain'}} source={require('../../assets/icons/truck.png')} />
         <Text numberOfLines={1} style={styles.textIcon}>{comercio.horario}</Text>
       </View>
       <View style={styles.topbarIcons}>
-        <Foundation name="credit-card" size={15} color="#212A42"  />
+      <Image style={{height:15,width:15,resizeMode:'contain'}} source={require('../../assets/icons/card.png')} />
           <Text numberOfLines={1} style={styles.textIcon}>{comercio.pagoTarjeta}</Text>
       </View>
     </View>
@@ -89,17 +89,21 @@ const Card = ({item , updatePedido}) => {
 }
 
 const Comercio = ({navigation, dispatch , route , productos , refresh , direccion , loader}) => {
-  const comercio = route.params.comercio;
+  // let comercio = route.params.comercio;
+  const [comercio,setComercio] = useState(null);
   const [pedido,setPedido] = useState([]);
   const [subtotal,setSubtotal] = useState(0);
+  const [clear,setClear] = useState(false);
 
   const onSearch = (palabras) =>{
     dispatch(getProductos(comercio.id,palabras));
   }
 
   const onRefresh = React.useCallback(() => {
+    console.log(comercio.id);
+    setClear(!clear);
     dispatch(getProductos(comercio.id,null,true));
-  },[]);
+  },[comercio]);
 
   const updatePedido = (item,cantidad) =>{
     let pedidoA = pedido;
@@ -126,16 +130,23 @@ const Comercio = ({navigation, dispatch , route , productos , refresh , direccio
     console.log(pedido);
   },[pedido])
 
-  useEffect(()=>{
-    if(!productos){
-      dispatch(getProductos(comercio.id,null));
-    }
-  },[productos]);
+  // useEffect(()=>{
+  //   if(!productos){
+  //     dispatch(getProductos(comercio.id,null));
+  //   }
+  // },[productos]);
 
   useEffect(()=>{
-      dispatch(getProductos(comercio.id,null));
-      setPedido([]);
+    setClear(!clear);
+    setComercio(route.params.comercio);
   },[route.params.comercio]);
+
+  useEffect(()=>{
+    if(comercio){
+      dispatch(getProductos(comercio.id,null));
+    }
+    setPedido([]);
+  },[comercio])
 
   const verPedido = () =>{
     let paramsRoute;
@@ -158,8 +169,11 @@ const Comercio = ({navigation, dispatch , route , productos , refresh , direccio
       onSearch={onSearch}
       navigation={navigation}
       back="Comercios"
+      clear={clear}
     />
-      <TopBar comercio={comercio}/>
+      {comercio?(
+        <TopBar comercio={comercio}/>
+      ):(null)}
       <ScrollView
       refreshControl={
         <RefreshControl refreshing={refresh} onRefresh={onRefresh} />

@@ -10,12 +10,9 @@ import {
 
 import Header from '../Header/Header';
 import styles from './styles';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
 import {connect} from 'react-redux';
 import {getComercios} from '../actions/comercios';
 import {routeImages} from '../actions/routePanel';
-import { FontAwesome5 } from '@expo/vector-icons';
 
 const Card = ({item , onPress}) => {
   return (
@@ -34,15 +31,15 @@ const Card = ({item , onPress}) => {
           <Text style={styles.nombreComercio}>{item.nombre}</Text>
         </View>
         <View style={styles.containerIconText}>
-          <FontAwesome5 name="store-alt" size={12} color="#212A42" />
+          <Image style={{height:16,width:16,resizeMode:'contain'}} source={require('../../assets/icons/store.png')} />
           <Text numberOfLines={1} style={styles.textIcon}>{item.dirLocal}</Text>
         </View>
         <View style={styles.containerIconText}>
-        <MaterialCommunityIcons name="truck" size={14} color="#212A42" />
+        <Image style={{height:15,width:15,resizeMode:'contain'}} source={require('../../assets/icons/truck.png')} />
           <Text numberOfLines={1} style={styles.textIcon}>{item.horario}</Text>
         </View>
         <View style={styles.containerIconText}>
-        <Foundation name="credit-card" size={16} color="#212A42" />
+        <Image style={{height:15,width:15,resizeMode:'contain'}} source={require('../../assets/icons/card.png')} />
           <Text numberOfLines={1} style={styles.textIcon}>{item.pagoTarjeta}</Text>
         </View>
         
@@ -58,6 +55,7 @@ const Comercios = ({navigation , dispatch , route , comercios , refresh , loader
   const rubro = route.params.rubro;
 
   const onRefresh = React.useCallback(() => {
+    console.log(rubro);
     dispatch(getComercios('rubro',rubro,true));
   },[comercios]);
   
@@ -72,7 +70,8 @@ const Comercios = ({navigation , dispatch , route , comercios , refresh , loader
   },[comercios]);
 
   useEffect(()=> {
-    console.log('change params')
+    console.log(rubro);
+    console.log('change params');
       if(palabras){
         dispatch(getComercios('palabras',palabras));
       }else{

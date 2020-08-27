@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React ,{useState,useEffect} from 'react';
 import {
   View,
   TextInput,
@@ -11,8 +11,13 @@ import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 
-const Header = ({onSearch , placeholder , showSearch , textHeader, navigation , back}) =>{
+const Header = ({onSearch , placeholder , showSearch , textHeader, navigation , back , clear}) =>{
   const [words,setWords] = useState('');
+
+  useEffect(()=>{
+    setWords('');
+    console.log('clear changed')
+  },[clear])
 
   return (
     <>
@@ -36,6 +41,7 @@ const Header = ({onSearch , placeholder , showSearch , textHeader, navigation , 
               onSubmitEditing={() => onSearch(words)} 
               placeholder={placeholder} style={styles.inputSearch}
               onChangeText={text=>setWords(text)}
+              value={words}
               />
               <TouchableWithoutFeedback
                 onPress={() => onSearch(words)}
