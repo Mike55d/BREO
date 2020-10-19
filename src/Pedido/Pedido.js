@@ -139,7 +139,13 @@ const Pedido = ({navigation , route , user , direccion}) => {
       text+=`${item.producto.nombre} (x${item.cantidad}) \n`;
     });
     text+=`Aclaraciones: ${aclaraciones}\n`;
-    text+=`Mi dirección es: ${direccion.lat ? urlMap : flatAddress}\n`;
+    text+=`Ciudad: ${direccion.ciudad}\n`;
+    text+=`Direccion: ${direccion.calle}\n`;
+    text+=`Entre calles: ${direccion.calles}\n`;
+    text+=`Psio ,Depto / Caracteristicas: ${direccion.pisoDepto}\n`;
+    if(direccion.lat){
+      text+=`Link de la ubicacion: ${direccion.lat ? urlMap : flatAddress}\n`;
+    }
     text+=`Voy a solicitar el producto o servicio: ${recibir ? 'En el local':'A domicilio'} \n`;
     text+=`El pago será con: ${pago ? 'Tarjeta' : 'Efectivo' } \n`;
     text+=`Total: $${subtotoal}\n`;
