@@ -93,6 +93,12 @@ const styles = StyleSheet.create({
     fontSize:14,
     color:'#212a42',
     fontWeight:'bold'
+  },
+  gratis:{
+    marginTop:3,
+    fontSize:14,
+    color:'#db6400',
+    fontWeight:'bold'
   }
 });
 

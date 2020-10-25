@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import { loaderOn, loaderOff } from './loader';
 import {routePanel} from './routePanel';
+import {ToastAndroid} from 'react-native';
 
 export const loginSuccess = (user) =>({
   type:'LOGIN_SUCCESS',
@@ -18,10 +19,12 @@ export const login = (user) => (
       dispatch(loginSuccess(user));
       dispatch(loaderOff());
     })
-    .catch(error => {
-      alert('blue'+error);
+    .catch(function (error) {
+      if (error.response) {
+        // Request made and server responded
+        ToastAndroid.show(error.response.data,ToastAndroid.SHORT);
+      } 
       dispatch(loaderOff());
     });
-    
   }
 )

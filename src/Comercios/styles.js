@@ -14,11 +14,11 @@ const styles = StyleSheet.create({
   },
   imageContainer:{
     flex:1.2,
+
   },
   cardImage:{
-    resizeMode:'cover',
-    height:100,
-    width:100,
+    resizeMode:'contain',
+    height:'100%',
   },
   textContainer:{
     flex:3.5,

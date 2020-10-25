@@ -10,14 +10,10 @@ import {
 
 import Header from '../Header/Header';
 import styles from './styles';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { Foundation } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import {connect} from 'react-redux';
 import {routeImages} from '../actions/routePanel';
 import {getProductos} from '../actions/productos';
 import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
 
 
 const TopBar = ({comercio}) => {
@@ -63,7 +59,12 @@ const Card = ({item , updatePedido}) => {
       <View style={styles.textContainer}>
           <Text style={[styles.headerCard, styles.textDark]}>{item.nombre}</Text>
           <Text numberOfLines={3} style={[styles.textContent, styles.textDark]}>{item.descripcion}</Text>
-          <Text style={styles.price}>${item.precio}</Text>
+          {item.precio > 0 ?
+            <Text style={styles.price}>${item.precio}</Text>
+            : 
+            <Text style={styles.gratis}>Gratis</Text>
+          }
+          
       </View>
       <View style={styles.counterContainer}>
         <View style={styles.itemRow}>
@@ -186,7 +187,7 @@ const Comercio = ({navigation, dispatch , route , productos , refresh , direccio
           )
         ):(null)}
       </ScrollView>
-        {subtotal?(
+        {pedido.length?(
           <View style={styles.subtotalContainer}>
             <Text style={{color:'white'}}>Subtotal del pedido: <Text style={styles.textTotal}>${subtotal}</Text></Text>
             <TouchableWithoutFeedback

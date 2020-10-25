@@ -136,34 +136,34 @@ const Pedido = ({navigation , route , user , direccion}) => {
     let flatAddress = `${direccion.provincia} ${direccion.ciudad} ${direccion.calles} ${direccion.calle} ${direccion.pisoDepto}`;
     let text = `Hola soy ${user.firstName} ${user.lastName} y este es mi pedido a través de la app BREO \n`;
     pedido.forEach(item =>{
-      text+=`${item.producto.nombre} (x${item.cantidad}) \n`;
+      text+=`- ${item.producto.nombre} (x${item.cantidad}) \n`;
     });
-    text+=`Aclaraciones: ${aclaraciones}\n`;
-    text+=`Ciudad: ${direccion.ciudad}\n`;
-    text+=`Direccion: ${direccion.calle}\n`;
-    text+=`Entre calles: ${direccion.calles}\n`;
-    text+=`Psio ,Depto / Caracteristicas: ${direccion.pisoDepto}\n`;
+    text+=`Aclaraciones: *${aclaraciones}*\n`;
+    text+=`Ciudad: *${direccion.ciudad}*\n`;
+    text+=`Direccion: *${direccion.calle} ${direccion.numero}*\n`;
+    text+=`Entre calles: *${direccion.calles}*\n`;
+    text+=`Caracteristicas: *${direccion.pisoDepto}*\n`;
     if(direccion.lat){
       text+=`Link de la ubicacion: ${direccion.lat ? urlMap : flatAddress}\n`;
     }
-    text+=`Voy a solicitar el producto o servicio: ${recibir ? 'En el local':'A domicilio'} \n`;
-    text+=`El pago será con: ${pago ? 'Tarjeta' : 'Efectivo' } \n`;
-    text+=`Total: $${subtotoal}\n`;
-    text+=`Muchas gracias!`;
+    text+=`Lo solicito: *${recibir ? 'En el local':'A domicilio'}* \n`;
+    text+=`Lo pago con: *${pago ? 'Tarjeta' : 'Efectivo' }* \n`;
+    text+=`Total del pedido: *$${subtotoal}*\n`;
+    // text+=`Muchas gracias!`;
     Linking.openURL(`whatsapp://send?text=${text}&phone=${comercio.whatsApp}`)
   }
 
   return (
     <>
       <Header
-        textHeader={`${direccion.provincia} ${direccion.ciudad} ${direccion.domicilio}`}
+        textHeader={`${direccion.calle} ${direccion.numero}`}
         showSearch={false}
         navigation={navigation}
         back="Comercio"
       />
-      <ScrollView >
+      <ScrollView nestedScrollEnabled = {true}>
       <View style={styles.containerCards}>
-          <ScrollView>
+          <ScrollView nestedScrollEnabled = {true}>
             {pedido ? (
               pedido.map(item =>
                 <Card key={item.producto.id} item={item} />

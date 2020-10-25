@@ -85,7 +85,7 @@ const Home = ({navigation,dispatch,rubros , refresh, direccion, user }) =>{
 		{/* TOP BAR  */}
 		{direccion?(
 			<View style={styles.topBar}>
-				<Text numberOfLines={1} style={{color:'white'}}>Domicilio: <Text style={{fontWeight:'bold',color:'white',}}>{direccion.provincia} {direccion.ciudad} {direccion.domicilio} {direccion.calle} {direccion.numero}</Text></Text>
+				<Text numberOfLines={1} style={{color:'white'}}>Domicilio: <Text style={{fontWeight:'bold',color:'white',}}>{direccion.calle} {direccion.numero}</Text></Text>
 			</View>
 		):(null)}
 		<ScrollView
