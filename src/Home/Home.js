@@ -108,7 +108,7 @@ const Home = ({navigation,dispatch,rubros , refresh, direccion, user }) =>{
 		</View>
 		{rubros ? (
 			<View style={styles.footer}>
-			<Text style={styles.textFooter}>Mandanos un WhatsApp ahora!</Text>
+			<Text style={styles.textFooter}>Contacto con el soporte</Text>
 				<TouchableWithoutFeedback onPress={() => sendWhatsApp()}>
 				<Image
               style={styles.waIcon}

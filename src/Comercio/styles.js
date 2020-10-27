@@ -36,10 +36,13 @@ const styles = StyleSheet.create({
   },
   imageContainer:{
     flex:2.8,
+    padding:2,
   },
   cardImage:{
     flex:1,
-    resizeMode:'contain',
+    resizeMode:'cover',
+    borderRadius:10,
+
   },
   textContainer:{
     padding:5,
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
   price:{
     marginTop:3,
     fontSize:14,
-    color:'#212a42',
+    color:'#db6400',
     fontWeight:'bold'
   },
   gratis:{

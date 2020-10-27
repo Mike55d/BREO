@@ -62,7 +62,7 @@ const Card = ({item , updatePedido}) => {
           {item.precio > 0 ?
             <Text style={styles.price}>${item.precio}</Text>
             : 
-            <Text style={styles.gratis}>Gratis</Text>
+            <Text style={styles.gratis}>Consultar</Text>
           }
           
       </View>

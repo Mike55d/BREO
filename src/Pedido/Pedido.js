@@ -138,11 +138,11 @@ const Pedido = ({navigation , route , user , direccion}) => {
     pedido.forEach(item =>{
       text+=`- ${item.producto.nombre} (x${item.cantidad}) \n`;
     });
-    text+=`Aclaraciones: *${aclaraciones}*\n`;
-    text+=`Ciudad: *${direccion.ciudad}*\n`;
-    text+=`Direccion: *${direccion.calle} ${direccion.numero}*\n`;
-    text+=`Entre calles: *${direccion.calles}*\n`;
-    text+=`Caracteristicas: *${direccion.pisoDepto}*\n`;
+    text+=`Aclaraciones: *${aclaraciones.trim()}*\n`;
+    text+=`Ciudad: *${direccion.ciudad.trim()}*\n`;
+    text+=`Direccion: *${direccion.calle.trimStart()} ${direccion.numero.trimEnd()}*\n`;
+    text+=`Entre calles: *${direccion.calles.trim()}*\n`;
+    text+=`Caracteristicas: *${direccion.pisoDepto.trim()}*\n`;
     if(direccion.lat){
       text+=`Link de la ubicacion: ${direccion.lat ? urlMap : flatAddress}\n`;
     }
