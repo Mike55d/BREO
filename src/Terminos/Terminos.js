@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react';
 import {
   View,
   Text,
+  ScrollView,
 } from 'react-native';
 import Header from '../Header/Header';
 import Axios from 'axios';
@@ -18,7 +19,6 @@ const Terminos = ({navigation, dispatch}) =>{
     dispatch(loaderOn());
     Axios.get(routePanel+'users/terminos')
     .then(response=>{
-      console.log(response);
       setTerminos(response.data);
       dispatch(loaderOff());
     })
@@ -39,16 +39,18 @@ const Terminos = ({navigation, dispatch}) =>{
         textHeader="Terminos y condiciones"
         navigation={navigation}
       />
-      <View style={styles.container}>
-        {terminos?(
-          terminos.map(item=>
-            <View style={styles.containerText} key={item.id}>
-              <Text style={styles.title}>{item.titulo}</Text>
-              <Text style={styles.content}>{item.contenido}</Text>
-            </View>
-          )
-        ):(null)}
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          {terminos?(
+            terminos.map(item=>
+              <View style={styles.containerText} key={item.id}>
+                <Text style={styles.title}>{item.titulo}</Text>
+                <Text style={styles.content}>{item.contenido}</Text>
+              </View>
+            )
+            ):(null)}
+        </View>
+      </ScrollView>
     </>
   )
 }
