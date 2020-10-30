@@ -57,7 +57,7 @@ const Card = ({item , updatePedido}) => {
         />
       </View>
       <View style={styles.textContainer}>
-          <Text style={[styles.headerCard, styles.textDark]}>{item.nombre}</Text>
+          <Text numberOfLines={1} style={[styles.headerCard, styles.textDark,{fontSize:item.nombre.length > 22 ? 11 :16}]}>{item.nombre}</Text>
           <Text numberOfLines={3} style={[styles.textContent, styles.textDark]}>{item.descripcion}</Text>
           {item.precio > 0 ?
             <Text style={styles.price}>${item.precio}</Text>

@@ -28,7 +28,7 @@ const Card = ({item , onPress}) => {
       </View>
       <View style={styles.textContainer}>
         <View style={styles.textRow}>
-          <Text style={styles.nombreComercio}>{item.nombre}</Text>
+          <Text numberOfLines={1} style={styles.nombreComercio,{fontSize:item.nombre.length > 25 ? 12 :18}}>{item.nombre}</Text>
         </View>
         <View style={styles.containerIconText}>
           <Image style={{height:16,width:16,resizeMode:'contain'}} source={require('../../assets/icons/store.png')} />
